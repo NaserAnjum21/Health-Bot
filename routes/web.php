@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('appointments', function()
+{
+    return view('pages.appointments');
+});
+
 Route::resource('patients','PatientController');
 Route::resource('prescriptions','PrescriptionController');
 Route::resource('medicines','MedicineController');

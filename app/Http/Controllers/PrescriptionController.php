@@ -42,18 +42,16 @@ class PrescriptionController extends Controller
     {
         //
         $request->validate([
-            'name' => 'required',
             'patient_id' => 'required',
-            'details' => 'required',
         ]);
 
         $id = Auth::id();
         $pr = prescription::create([
             'patient_id' => $request->patient_id,
-            'name' => $request->name,
             'doctor_id' => $id,
-            'medicine' => $request->medicine,
-            'details' => $request->details,
+            'time' => now(),
+            'symptoms' => $request->symptoms,
+            'directions' => $request->directions,
             'next_visit_date' => $request->next_visit_date,
             ]);
         $pr->save();

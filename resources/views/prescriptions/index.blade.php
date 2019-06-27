@@ -21,17 +21,17 @@
     <table class="table table-bordered">
         <tr>
             <th>No</th>
-            <th>Patient Name</th>
-            <th>Medicine</th>
-            <th>Details</th>
+            <th>Patient ID</th>
+            <th>Symptoms</th>
+            <th>Directions</th>
             <th width="280px">Action</th>
         </tr>
         @foreach ($prescriptions as $prescription)
         <tr>
             <td>{{ ++$i }}</td>
-            <td>{{ $prescription->name }}</td>
-            <td>{{ $prescription->medicine }}</td>
-            <td>{{ $prescription->details }}</td>
+            <td>{{ $prescription->patient_id }}</td>
+            <td>{{ $prescription->symptoms }}</td>
+            <td>{{ $prescription->directions }}</td>
             <td>
                 <form action="{{ route('prescriptions.destroy',$prescription->id) }}" method="POST">
    

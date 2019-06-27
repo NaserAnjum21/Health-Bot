@@ -8,6 +8,6 @@ class medicine extends Model
 {
     //
     protected $fillable = [
-        'trade_name', 'generic_name'
+        'id', 'trade_name', 'generic_name', 'cost', 'side_effects', 'precautions'
     ];
 }

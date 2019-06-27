@@ -8,6 +8,6 @@ class prescription extends Model
 {
     //
     protected $fillable = [
-        'id', 'name', 'patient_id', 'doctor_id', 'medicine', 'details', 'next_visit_date'
+        'id', 'patient_id', 'doctor_id', 'time', 'next_visit_date', 'symptoms', 'directions'
     ];
 }

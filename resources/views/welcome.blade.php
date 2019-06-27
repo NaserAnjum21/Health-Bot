@@ -89,6 +89,7 @@
                         <a href="{{ route('patients.index') }}">Patient List</a>
                         <a href="{{ route('prescriptions.create') }}">Make a Prescription</a>
                         <a href="{{ route('medicines.create') }}">Add a Medicine</a>
+                        <a href="/appointments">View Appointments</a>
                     @endauth
                     
                 </div>

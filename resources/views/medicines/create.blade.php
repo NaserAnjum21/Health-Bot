@@ -39,6 +39,20 @@
                 <input type="text" name="generic_name" class="form-control" placeholder="Generic Name">
             </div>
         </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Side Effects:</strong>
+                <textarea class="form-control" style="height:150px" name="side_effects" placeholder="Side Effects"></textarea>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+            <div class="form-group">
+                <strong>Precautions:</strong>
+                <textarea class="form-control" style="height:150px" name="precautions" placeholder="Precautions"></textarea>
+            </div>
+        </div>
         
         
         <div class="col-xs-12 col-sm-12 col-md-12 text-center">
