@@ -18,13 +18,15 @@ class CreatePatientsTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password')->nullable();
+            $table->string('password');
+            $table->rememberToken();
+            $table->timestamps();
+            $table->boolean('is_patient')->default(true);
+            $table->string('address')->nullable();
             $table->string('height')->nullable();
             $table->string('weight')->nullable();
             $table->string('bloodgroup')->nullable();
             $table->string('bloodpressure')->nullable();
-            $table->rememberToken();
-            $table->timestamps();
         });
     }
 

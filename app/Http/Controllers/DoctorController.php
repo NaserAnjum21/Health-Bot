@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use App\Quotation;
 use App\Doctor;
 use Illuminate\Http\Request;
 
@@ -15,6 +17,10 @@ class DoctorController extends Controller
     public function index()
     {
         //
+        $doctors = doctor::latest()->paginate(10);
+  
+        return view('doctors.index',compact('doctors'))
+            ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -25,6 +31,18 @@ class DoctorController extends Controller
     public function create()
     {
         //
+    }
+
+    public function approve(Request $request)
+    {
+        //
+        DB::table('doctors')
+        ->where('id', $request->id)
+        ->updateOrInsert(
+            ['is_doctor' => 'true']
+        );
+
+        //return redirect('');
     }
 
     /**

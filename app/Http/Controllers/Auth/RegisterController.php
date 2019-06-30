@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\User;
+use App\Patient;
+use App\Doctor;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -38,6 +41,18 @@ class RegisterController extends Controller
     public function __construct()
     {
         $this->middleware('guest');
+        $this->middleware('guest:patient');
+        $this->middleware('guest:doctor');
+    }
+
+    public function showPatientRegisterForm()
+    {
+        return view('auth.register', ['url' => 'patient']);
+    }
+
+    public function showDoctorRegisterForm()
+    {
+        return view('auth.register', ['url' => 'doctor']);
     }
 
     /**
@@ -68,5 +83,39 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+    }
+
+    
+    protected function createPatient(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $patient = Patient::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->intended('login/patient');
+    } 
+
+    /*
+    protected function createPatient(array $data)
+    {
+        return Patient::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password']),
+        ]);
+    }
+    */
+
+    protected function createDoctor(Request $request)
+    {
+        $this->validator($request->all())->validate();
+        $doctor = Doctor::create([
+            'name' => $request['name'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+        ]);
+        return redirect()->intended('login/doctor');
     }
 }
