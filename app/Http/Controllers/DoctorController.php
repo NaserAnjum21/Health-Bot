@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use DB;
+use Auth;
 use App\Quotation;
 use App\Doctor;
 use Illuminate\Http\Request;
@@ -36,13 +37,27 @@ class DoctorController extends Controller
     public function approve(Request $request)
     {
         //
+
         DB::table('doctors')
         ->where('id', $request->id)
-        ->updateOrInsert(
-            ['is_doctor' => 'true']
+        ->update(
+            ['is_doctor' => 1]
         );
 
-        //return redirect('');
+        return redirect('/doctors');
+    }
+
+    public function disapprove(Request $request)
+    {
+        //
+
+        DB::table('doctors')
+        ->where('id', $request->id)
+        ->update(
+            ['is_doctor' => 0]
+        );
+
+        return redirect('/doctors');
     }
 
     /**
@@ -73,9 +88,17 @@ class DoctorController extends Controller
      * @param  \App\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Doctor $doctor)
+    public function edit()
     {
         //
+        $id =Auth::id();
+        $doctors= DB::table('doctors')
+        ->where('id', $id)
+        ->get();
+
+        $doctor = $doctors[0];
+
+        return view('doctors.edit',['doctor' => $doctor]);
     }
 
     /**
@@ -85,9 +108,19 @@ class DoctorController extends Controller
      * @param  \App\Doctor  $doctor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Doctor $doctor)
+    public function update(Request $request)
     {
         //
+        $doc_id = Auth::guard('doctor')->id();
+        DB::table('doctors')
+        ->where('id', $doc_id)
+        ->update([
+            'work_address' => $request->address,
+            'qualification' => $request->qualification,
+            'speciality' => $request->speciality,
+        ]);
+
+        return redirect('/doctor');
     }
 
     /**

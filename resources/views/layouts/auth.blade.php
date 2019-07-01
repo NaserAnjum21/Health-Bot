@@ -41,15 +41,43 @@
                         <ul class="navbar-nav ml-auto">
                             <!-- Authentication Links -->
                            <li class="nav-item dropdown">
+                                @auth('doctor')
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Hi There <span class="caret"></span>
+                                {{ Auth::guard('doctor')->user()->name }} <span class="caret"></span>
                                 </a>
+                                @endauth
+
+                                @auth('patient')
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::guard('patient')->user()->name }} <span class="caret"></span>
+                                </a>
+                                @endauth
+
+                                @auth
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                                </a>
+                                @endauth
+
+                                
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
+                                    </a>
+
+                                    @auth('doctor')
+
+                                    <a class="dropdown-item" href="/updateDocProfile">
+                                        {{ __('Profile') }}
+                                    </a>
+                                    
+                                    @endauth
+
+                                    <a class="dropdown-item" href="">
+                                        {{ __('Settings') }}
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

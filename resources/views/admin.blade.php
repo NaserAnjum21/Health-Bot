@@ -40,7 +40,6 @@
                         <a href="{{ route('patients.index') }}">Registered Patient</a>
                         <a href="{{ route('doctors.index') }}">Registered Doctor</a>
                         <a href="{{ route('medicines.index') }}">Medicine List</a>
-                        <a href="/appointments">View Appointments</a>
                     @endauth
                     
                 </div>

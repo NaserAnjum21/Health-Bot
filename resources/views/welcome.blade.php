@@ -86,14 +86,16 @@
 
                 <div class="links">
                     @auth
+                        <!--
                         <a href="{{ route('patients.index') }}">Patient List</a>
                         <a href="{{ route('prescriptions.create') }}">Make a Prescription</a>
                         <a href="{{ route('medicines.create') }}">Add a Medicine</a>
                         <a href="/appointments">View Appointments</a>
+                        -->
                     @else
                         <a href="{{ url('/login/patient') }}">Patient Login</a>
-                        <a href="{{ url('/login/doctor') }}">Doctor Login</a>
                         <a href="{{ url('/register/patient') }}">Patient Register</a>
+                        <a href="{{ url('/login/doctor') }}">Doctor Login</a>
                         <a href="{{ url('/register/doctor') }}">Doctor Register</a>
                     @endauth
                     

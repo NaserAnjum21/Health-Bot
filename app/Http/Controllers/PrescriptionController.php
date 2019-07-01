@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Auth;
+use DB;
 use App\prescription;
 use Illuminate\Http\Request;
 
@@ -38,25 +39,28 @@ class PrescriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$app_id)
     {
-        //
-        $request->validate([
-            'patient_id' => 'required',
-        ]);
+        /** 
+        *$request->validate([
+        *    'patient_id' => 'required',
+        *]);
+        */
+        $apps = DB::table('appointments')->where([
+            ['id', '=', $app_id],
+        ])->get();
 
-        $id = Auth::id();
-        $pr = prescription::create([
-            'patient_id' => $request->patient_id,
-            'doctor_id' => $id,
+        DB::table('prescriptions')->insert([
+            'patient_id' => $apps[0]->patient_id,
+            'doctor_id' => $apps[0]->doctor_id,
             'time' => now(),
             'symptoms' => $request->symptoms,
             'directions' => $request->directions,
             'next_visit_date' => $request->next_visit_date,
             ]);
-        $pr->save();
+        
 
-        return redirect()->route('prescriptions.index')
+        return redirect('show_doc_appointments')
                         ->with('success','Prescription Given successfully.');
 
     }

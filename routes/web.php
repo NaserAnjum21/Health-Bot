@@ -33,6 +33,53 @@ Route::get('appointments', function()
     return view('pages.appointments');
 });
 
+Route::get('updateDocProfile', function()
+{
+    return view('pages.updateDoc');
+});
+
+
+Route::get('select_doctor', function()
+{
+    $doctors = DB::table('doctors')->where([
+        ['is_doctor', '=', '1'],
+    ])->get();
+
+    return view('pages.select_doctor',['doctors' => $doctors]);
+});
+
+Route::get('show_pat_appointments', function()
+{
+    $pat_id= Auth::guard('patient')->id();
+    $apps = DB::table('appointments')->where([
+        ['patient_id', '=', $pat_id],
+    ])->get();
+
+    return view('pages.pat_appointment',['apps' => $apps]);
+});
+
+Route::get('show_pat_prescriptions', function()
+{
+    $pat_id= Auth::guard('patient')->id();
+    $prescriptions = DB::table('prescriptions')->where([
+        ['patient_id', '=', $pat_id],
+    ])->get();
+
+    return view('pages.pat_prescription',['prescriptions' => $prescriptions]);
+});
+
+Route::get('show_doc_appointments', function()
+{
+    $doc_id= Auth::guard('doctor')->id();
+    $apps = DB::table('appointments')->where([
+        ['doctor_id', '=', $doc_id],
+    ])->get();
+
+    //$patients= DB::table('patients')->get();
+
+    return view('pages.doc_appointment',['apps' => $apps]);
+});
+
 Route::get('admin', function()
 {
     return view('admin');
@@ -42,6 +89,12 @@ Route::resource('patients','PatientController');
 Route::resource('doctors','DoctorController');
 Route::resource('prescriptions','PrescriptionController');
 Route::resource('medicines','MedicineController');
+Route::resource('appointments','AppointmentController');
 
 /* Route::get('/home', 'HomeController@index')->name('home'); */
+Route::post('storeApp/{id}','AppointmentController@store');
+Route::post('storePresc/{id}','PrescriptionController@store');
+Route::post('confirm/{id}','AppointmentController@confirm');
+Route::post('updateDoc','DoctorController@update');
 Route::get('/approve/{id}', 'DoctorController@approve');
+Route::get('/disapprove/{id}', 'DoctorController@disapprove');

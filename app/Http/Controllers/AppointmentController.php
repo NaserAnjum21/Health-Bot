@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use DB;
+use Auth;
 use App\Appointment;
 use Illuminate\Http\Request;
 
@@ -33,9 +35,34 @@ class AppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$dr_id)
     {
         //
+        $pat_id = Auth::guard('patient')->id();
+
+        DB::table('appointments')->insert([
+            'patient_id' => $pat_id,
+            'doctor_id' => $dr_id,
+            'time' => $request->date,
+            'status' => 'pending',
+        ]);
+    
+
+        return redirect('/select_doctor');
+    }
+
+    public function confirm(Request $request)
+    {
+        //
+
+        DB::table('appointments')
+        ->where('id', $request->id)
+        ->update([
+            'status' => 'confirmed',
+            'time' => $request->date,
+        ]);
+
+        return redirect('/show_doc_appointments');
     }
 
     /**

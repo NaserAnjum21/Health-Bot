@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use DB;
 use App\medicine;
 use Illuminate\Http\Request;
 
@@ -92,12 +93,13 @@ class MedicineController extends Controller
      * @param  \App\medicine  $medicine
      * @return \Illuminate\Http\Response
      */
-    public function destroy(medicine $medicine)
+    public function destroy($med_id)
     {
         //
-        $medicine->delete();
+        //$medicine->delete();
+
+        DB::table('medicines')->where('id', '=', $med_id)->delete();
   
-        return redirect()->route('medicines.index')
-                        ->with('success','Medicine deleted successfully');
+        return redirect()->route('medicines.index');
     }
 }
