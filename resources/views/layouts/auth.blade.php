@@ -8,7 +8,7 @@
         <!-- CSRF Token -->
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>Health Bot</title>
 
         <!-- Scripts -->
         <script src="{{ asset('js/app.js') }}" defer></script>
@@ -24,9 +24,24 @@
         <div id="app">
             <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
-                    <a class="navbar-brand" href="{{ url('/') }}">
-                        {{ config('app.name', 'Laravel') }}
+                    @auth('doctor')
+                    <a class="navbar-brand" href="{{ url('/doctor') }}">
+                        Health Bot
                     </a>
+                    @endauth
+
+                    @auth('patient')
+                    <a class="navbar-brand" href="{{ url('/patient') }}">
+                        Health Bot
+                    </a>
+                    @endauth
+
+                    @auth
+                    <a class="navbar-brand" href="{{ url('/admin') }}">
+                        Health Bot
+                    </a>
+                    @endauth
+
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -39,6 +54,30 @@
 
                         <!-- Right Side Of Navbar -->
                         <ul class="navbar-nav ml-auto">
+                            @auth('patient')
+                            <li class="nav-item">
+                                <a class="nav-link" href="/select_doctor">Doctors</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/show_pat_appointments">Appointments</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/show_pat_prescriptions">Prescriptions</a>
+                            </li>
+                            @endauth
+
+                            @auth('doctor')
+
+                            <li class="nav-item">
+                                <a class="nav-link" href="/updateDocProfile">Profile</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link" href="/show_doc_appointments">Appointments</a>
+                            </li>
+                            
+                            @endauth
+
                             <!-- Authentication Links -->
                            <li class="nav-item dropdown">
                                 @auth('doctor')
@@ -68,14 +107,6 @@
                                         {{ __('Logout') }}
                                     </a>
 
-                                    @auth('doctor')
-
-                                    <a class="dropdown-item" href="/updateDocProfile">
-                                        {{ __('Profile') }}
-                                    </a>
-                                    
-                                    @endauth
-
                                     <a class="dropdown-item" href="">
                                         {{ __('Settings') }}
                                     </a>
@@ -85,6 +116,7 @@
                                     </form>
                                 </div>
                             </li>
+                            
                         </ul>
                     </div>
                 </div>

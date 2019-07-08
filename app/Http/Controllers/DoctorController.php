@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\Input;
 
 use DB;
 use Auth;
@@ -112,15 +113,21 @@ class DoctorController extends Controller
     {
         //
         $doc_id = Auth::guard('doctor')->id();
-        DB::table('doctors')
-        ->where('id', $doc_id)
-        ->update([
-            'work_address' => $request->address,
-            'qualification' => $request->qualification,
-            'speciality' => $request->speciality,
-        ]);
 
-        return redirect('/doctor');
+        $doctor= Doctor::find($doc_id);
+
+        if($doctor)
+        {
+            if(!empty($request->address))
+                $doctor->work_address= $request->address;
+            if(!empty($request->qualification))
+                $doctor->qualification= $request->qualification;
+            if(!empty($request->speciality))
+                $doctor->speciality= $request->speciality;
+            $doctor->save();
+        }
+
+        return redirect()->back()->with('success','Profile updated.');
     }
 
     /**
@@ -132,5 +139,85 @@ class DoctorController extends Controller
     public function destroy(Doctor $doctor)
     {
         //
+    }
+
+    public function doctorSearch()
+    {
+        $q = Input::get ( 'q' );
+        $doctors = Doctor::where ( 'name', 'LIKE', '%' . $q . '%' )
+                        ->orWhere ( 'email', 'LIKE', '%' . $q . '%' )
+                        ->orWhere ( 'speciality', 'LIKE', '%' . $q . '%' )
+                        ->orWhere ( 'work_address', 'LIKE', '%' . $q . '%' )
+                        ->orderBy('name')
+                        ->get ();
+        if (count ( $doctors ) > 0)
+            return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withDetails ( $doctors )->withQuery ( $q );
+        else
+            return view ( 'pages.select_doctor' )->withMessage ( 'No Details found. Try to search again !' );
+    }
+
+    public function searchDoctor(Request $request)
+    {
+     if($request->ajax())
+     {
+      $output = '';
+      $query = $request->get('query');
+      if($query != '')
+      {
+       $data = DB::table('doctors')
+         ->where('name', 'like', '%'.$query.'%')
+         ->orWhere('work_address', 'like', '%'.$query.'%')
+         ->orWhere('qualification', 'like', '%'.$query.'%')
+         ->orWhere('speciality', 'like', '%'.$query.'%')
+         ->orderBy('name')
+         ->get();
+         
+      }
+      else
+      {
+        $data = DB::table('doctors')
+        ->orderBy('name')
+         ->get();
+      }
+      $total_row = $data->count();
+      if($total_row > 0)
+      {
+       foreach($data as $row)
+       {
+        if($row->is_doctor==true)
+        {
+            $doctors.push($row);
+            $output .= '
+            <tr>
+            <td>'.$row->name.'</td>
+            <td>'.$row->email.'</td>
+            <td>'.$row->work_address.'</td>
+            <td>'.$row->qualification.'</td>
+            <td>'.$row->speciality.'</td>
+            </tr>
+            ';
+        }
+        
+       }
+      }
+      else
+      {
+       $output = '
+       <tr>
+        <td align="center" colspan="5">No Data Found</td>
+       </tr>
+       ';
+      }
+      
+      $data = array(
+       'table_data'  => $output,
+       'total_data'  => $total_row,
+       'doctor_data' => $doctors
+      );
+
+      echo json_encode($data);
+
+      return view('pages.search_doctor',compact('doctors'));
+     }
     }
 }

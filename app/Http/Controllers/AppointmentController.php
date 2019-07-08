@@ -40,15 +40,38 @@ class AppointmentController extends Controller
         //
         $pat_id = Auth::guard('patient')->id();
 
+        $combinedDT = date('Y-m-d H:i:s', strtotime("$request->date $request->time"));
+
+        $patConflictApp= DB::table('appointments')
+                        ->where('time', $combinedDT)
+                        ->where('patient_id', $pat_id)
+                        ->get();
+
+        if(!$patConflictApp->isEmpty())
+        {
+            return redirect()->back()->with('error','You have appointment at the same time. Try different time');
+        }
+
+        $docConflictApp= DB::table('appointments')
+                        ->where('time', $combinedDT)
+                        ->where('doctor_id', $dr_id)
+                        ->where('status', 'confirmed')
+                        ->get();
+
+        if(!$docConflictApp->isEmpty())
+        {
+            return redirect()->back()->with('error','The doctor do not have free slot at this time. Try different time');
+        }
+
         DB::table('appointments')->insert([
             'patient_id' => $pat_id,
             'doctor_id' => $dr_id,
-            'time' => $request->date,
+            'time' => $combinedDT,
             'status' => 'pending',
         ]);
-    
 
-        return redirect('/select_doctor');
+        //session()->flash('msg', 'Successfully done the operation.');
+        return redirect()->back()->with('success','Appointment Request Successfully Done. Wait for confirmation.');
     }
 
     public function confirm(Request $request)
@@ -58,8 +81,7 @@ class AppointmentController extends Controller
         DB::table('appointments')
         ->where('id', $request->id)
         ->update([
-            'status' => 'confirmed',
-            'time' => $request->date,
+            'status' => 'confirmed'
         ]);
 
         return redirect('/show_doc_appointments');

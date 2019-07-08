@@ -7,13 +7,26 @@
 	href="https://cdn.datatables.net/1.10.12/css/dataTables.bootstrap.min.css">
 
 @endsection
+
 @section('content')
 
 <div class="container">
+	@include('flash_message')
 	<div class="col-sm-12">
 		<div class="panel panel-default">
-			<div class="panel-heading">Available Doctors</div>
+			<div class="panel-heading"></div>
 			<div class="panel-body">
+			<form action="doctorSearch" method="POST" role="search">
+				{{ csrf_field() }}
+				<div class="input-group">
+					<input type="text" class="form-control" name="q"
+						placeholder="Search doctors by name,speciality,address etc.."> <span class="input-group-btn">
+						<button type="submit" class="btn btn-default">
+							Search
+						</button>
+					</span>
+				</div>
+			</form>
 				<table class="table table-striped" id="table">
 					<thead>
 						<tr>
@@ -64,6 +77,13 @@
                                                             <div class="form-group">
                                                                 <strong>Preferred Date:</strong>
                                                                 <input type="date" name="date" class="form-control" placeholder="Visit date">
+                                                            </div>
+														</div>
+														
+														<div class="col-xs-12 col-sm-12 col-md-12">
+                                                            <div class="form-group">
+                                                                <strong>Preferred Time:</strong>
+                                                                <input type="time" name="time" class="form-control" placeholder="Visit time">
                                                             </div>
                                                         </div>
                                                         

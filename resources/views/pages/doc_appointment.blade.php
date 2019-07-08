@@ -23,6 +23,8 @@
                     <!-- Trigger the modal with a button -->
                     <td>
 
+                    @if (strpos($app->status, 'pending') !== false)
+
                     <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{$app->id}}">Confirm</button>
 
                     <!-- Modal -->
@@ -44,8 +46,8 @@
 
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
-                                            <strong>Visit Date:</strong>
-                                            <input type="date" name="date" class="form-control" placeholder="Visit date">
+                                            <strong>Do you want to confirm the appointment?</strong>
+                                            
                                         </div>
                                     </div>
                                     
@@ -66,11 +68,7 @@
 
                 </td>
 
-                <td>
-
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#">Cancel</button>
-                
-                </td>
+                @endif
 
 
                 @if (strpos($app->status, 'confirmed') !== false)
