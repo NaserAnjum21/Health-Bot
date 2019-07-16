@@ -1,5 +1,7 @@
 @extends('layouts.auth')
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -110,8 +112,29 @@
 
                                             <div class="col-xs-12 col-sm-12 col-md-12">
                                                 <div class="form-group">
+                                                    <strong>Disease:</strong>
+                                                    <input class="typeahead form-control" type="text" name="disease" placeholder="Diagnosed disease">
+                                                </div>
+
+                                                <script type="text/javascript">
+                                                    var path = "{{ route('pickdisease') }}";
+                                                    $('input.typeahead').typeahead({
+                                                        source:  function (query, process) {
+                                                        return $.get(path, { query: query }, function (data) {
+                                                                return process(data);
+                                                            });
+                                                        }
+                                                    });
+                                                </script>
+
+                                            </div>
+
+                                            
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
                                                     <strong>Medicine:</strong>
-                                                    <input type="text" name="medicine" class="form-control" placeholder="Medicine">
+                                                    <input class="form-control" type="text" name="medicine" placeholder="Medicine">
                                                 </div>
                                             </div>
 

@@ -72,6 +72,15 @@ class DiseaseController extends Controller
         //
     }
 
+    public function autocomplete(Request $request)
+    {
+        $data = Disease::select("name")
+                ->where("name","LIKE","%{$request->input('query')}%")
+                ->get();
+   
+        return response()->json($data);
+    }
+
     /**
      * Remove the specified resource from storage.
      *

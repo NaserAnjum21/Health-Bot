@@ -61,6 +61,31 @@ class DoctorController extends Controller
         return redirect('/doctors');
     }
 
+    public function rate(Request $request, $dr_id)
+    {
+        //
+        $doctor= Doctor::find($dr_id);
+
+        $req_rate= (int)$request->rating;
+
+        $old_rating_sum = $doctor->rate_sum;
+        $old_count = $doctor->rate_count;
+
+        if($req_rate > 5) $req_rate=5;
+        if($req_rate < 0) $req_rate=0;
+
+        $new_rating_sum =  $old_rating_sum + $req_rate;
+        $new_count= $old_count + 1 ;
+
+        $doctor->rate_sum= $new_rating_sum;
+        $doctor->rate_count= $new_count;
+
+        $doctor->save();
+
+        return redirect()->back()->with('success','Rating and feedback given successfully');
+    }
+
+
     /**
      * Store a newly created resource in storage.
      *
@@ -148,7 +173,7 @@ class DoctorController extends Controller
                         ->orWhere ( 'email', 'LIKE', '%' . $q . '%' )
                         ->orWhere ( 'speciality', 'LIKE', '%' . $q . '%' )
                         ->orWhere ( 'work_address', 'LIKE', '%' . $q . '%' )
-                        ->orderBy('name')
+                        ->orderBy(DB::raw("`rate_sum` / `rate_count`"), 'desc')
                         ->get ();
         if (count ( $doctors ) > 0)
             return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withDetails ( $doctors )->withQuery ( $q );

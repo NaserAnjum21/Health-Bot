@@ -33,10 +33,16 @@ Route::get('appointments', function()
     return view('pages.appointments');
 });
 
+Route::get('bodymap', function()
+{
+    return view('pages.bodymap');
+});
+
 Route::get('updateDocProfile', function()
 {
     return view('pages.updateDoc');
 });
+
 
 Route::get('search_doctor', function()
 {
@@ -51,7 +57,7 @@ Route::get('select_doctor', function()
 {
     $doctors = DB::table('doctors')->where([
         ['is_doctor', '=', '1'],
-    ])->get();
+    ])->orderBy(DB::raw("`rate_sum` / `rate_count`"), 'desc')->get();
 
     return view('pages.select_doctor',['doctors' => $doctors]);
 });
@@ -62,6 +68,17 @@ Route::get('show_pat_appointments', function()
     $apps = DB::table('appointments')->where([
         ['patient_id', '=', $pat_id],
     ])->get();
+
+    foreach( $apps as $app )
+    {
+        if($app->time < now())
+        {
+            $app->status= 'finished';
+            //$app->save();
+        }
+         
+    }
+
 
     return view('pages.pat_appointment',['apps' => $apps]);
 });
@@ -103,6 +120,7 @@ Route::resource('appointments','AppointmentController');
 
 /* Route::get('/home', 'HomeController@index')->name('home'); */
 Route::post('storeApp/{id}','AppointmentController@store');
+Route::post('rate/{id}','DoctorController@rate');
 Route::post('storePresc/{id}','PrescriptionController@store');
 Route::post('confirm/{id}','AppointmentController@confirm');
 
@@ -111,3 +129,6 @@ Route::get('/approve/{id}', 'DoctorController@approve');
 Route::get('/disapprove/{id}', 'DoctorController@disapprove');
 Route::get('searchDoctor', 'DoctorController@searchDoctor')->name('doctor.search');
 Route::any('doctorSearch', 'DoctorController@doctorSearch')->name('doctor.search2');
+
+Route::get('pickmedicine', 'MedicineController@autocomplete')->name('pickmedicine');
+Route::get('pickdisease', 'DiseaseController@autocomplete')->name('pickdisease');

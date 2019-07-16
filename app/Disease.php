@@ -8,6 +8,6 @@ class Disease extends Model
 {
     //
     protected $fillable = [
-        'id', 'name', 'symptoms', 'causes', 'risk_factors'
+        'id', 'name', 'type', 'symptoms', 'causes', 'risk_factors'
     ];
 }

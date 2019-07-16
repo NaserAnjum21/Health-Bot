@@ -75,6 +75,16 @@ class MedicineController extends Controller
         //
     }
 
+    public function autocomplete(Request $request)
+    {
+        $data = medicine::select("name")
+                ->where("trade_name","LIKE","%{$request->input('query')}%")
+                ->orwhere("generic_name","LIKE","%{$request->input('query')}%")
+                ->get();
+   
+        return response()->json($data);
+    }
+
     /**
      * Update the specified resource in storage.
      *

@@ -14,7 +14,7 @@ class Doctor extends Authenticatable
     protected $guard = 'doctor';
 
     protected $fillable = [
-        'name', 'email', 'password', 'work_address', 'qualification', 'speciality'
+        'name', 'email', 'password', 'work_address', 'qualification', 'speciality', 'contact_no', 'visiting_hours','rate_sum','rate_count'
     ];
 
     protected $hidden = [
