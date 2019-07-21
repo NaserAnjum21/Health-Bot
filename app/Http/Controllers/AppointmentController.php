@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use DB;
-use Auth;
 use App\Appointment;
+use Auth;
+use DB;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -35,32 +35,30 @@ class AppointmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$dr_id)
+    public function store(Request $request, $dr_id)
     {
         //
         $pat_id = Auth::guard('patient')->id();
 
         $combinedDT = date('Y-m-d H:i:s', strtotime("$request->date $request->time"));
 
-        $patConflictApp= DB::table('appointments')
-                        ->where('time', $combinedDT)
-                        ->where('patient_id', $pat_id)
-                        ->get();
+        $patConflictApp = DB::table('appointments')
+            ->where('time', $combinedDT)
+            ->where('patient_id', $pat_id)
+            ->get();
 
-        if(!$patConflictApp->isEmpty())
-        {
-            return redirect()->back()->with('error','You have appointment at the same time. Try different time');
+        if (!$patConflictApp->isEmpty()) {
+            return redirect()->back()->with('error', 'You have appointment at the same time. Try different time');
         }
 
-        $docConflictApp= DB::table('appointments')
-                        ->where('time', $combinedDT)
-                        ->where('doctor_id', $dr_id)
-                        ->where('status', 'confirmed')
-                        ->get();
+        $docConflictApp = DB::table('appointments')
+            ->where('time', $combinedDT)
+            ->where('doctor_id', $dr_id)
+            ->where('status', 'confirmed')
+            ->get();
 
-        if(!$docConflictApp->isEmpty())
-        {
-            return redirect()->back()->with('error','The doctor do not have free slot at this time. Try different time');
+        if (!$docConflictApp->isEmpty()) {
+            return redirect()->back()->with('error', 'The doctor do not have free slot at this time. Try different time');
         }
 
         DB::table('appointments')->insert([
@@ -71,7 +69,26 @@ class AppointmentController extends Controller
         ]);
 
         //session()->flash('msg', 'Successfully done the operation.');
-        return redirect()->back()->with('success','Appointment Request Successfully Done. Wait for confirmation.');
+        return redirect()->back()->with('success', 'Appointment Request Successfully Done. Wait for confirmation.');
+    }
+
+    public function reschedule(Request $request, $app_id)
+    {
+        //
+
+        $app = Appointment::find($app_id);
+
+        $combinedDT = date('Y-m-d H:i:s', strtotime("$request->date $request->time"));
+
+        if ($app) {
+            $app->status = 'confirmed';
+            if ($combinedDT) {
+                $app->time = $combinedDT;
+            }
+            $app->save();
+
+        }
+        return redirect()->back()->with('success', 'Appointment rescheduled');
     }
 
     public function confirm(Request $request)
@@ -79,12 +96,29 @@ class AppointmentController extends Controller
         //
 
         DB::table('appointments')
-        ->where('id', $request->id)
-        ->update([
-            'status' => 'confirmed'
-        ]);
+            ->where('id', $request->id)
+            ->update([
+                'status' => 'confirmed',
+            ]);
 
         return redirect('/show_doc_appointments');
+    }
+
+    public function cancelFromPatient(Request $request, $app_id)
+    {
+        //
+
+        $app = Appointment::find($app_id);
+
+        if ($app) {
+            $app->status = 'cancelled';
+            if (!empty($request->result)) {
+                $app->cancel_reason = $request->result;
+            }
+            $app->save();
+            return redirect()->back()->with('success', 'Appointment succesfully cancelled');
+        }
+        return redirect()->back();
     }
 
     /**

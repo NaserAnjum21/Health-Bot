@@ -63,7 +63,7 @@
 										<div class="row">
 											<div class="col-sm-6" style="padding:10px 30px;">
 												<h5 class="card-title">{{$doctor->name}}</h5>
-												<img src="img/doctors/{{$doctor->id}}.jpg" style="width:16rem; height:16rem; padding:15px;" class="card-img-top" alt="...">
+												<img src="storage/doctors/{{ $doctor->profile_pic }}" style="width:16rem; height:16rem; padding:15px;" class="card-img-top" alt="...">
 												<p style="padding-left: 60px;">
 													<?php  
 														$rate_sum=$doctor->rate_sum;  

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\patient;
+use Auth;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
@@ -16,8 +17,8 @@ class PatientController extends Controller
     {
         //
         $patients = patient::latest()->paginate(10);
-  
-        return view('patients.index',compact('patients'))
+
+        return view('patients.index', compact('patients'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
@@ -45,11 +46,58 @@ class PatientController extends Controller
             'name' => 'required',
             'email' => 'required',
         ]);
-  
+
         patient::create($request->all());
-   
+
         return redirect()->route('patients.index')
-                        ->with('success','Patient Registered successfully.');
+            ->with('success', 'Patient Registered successfully.');
+    }
+
+    public function update(Request $request)
+    {
+        $pat_id = Auth::guard('patient')->id();
+        $patient = patient::find($pat_id);
+
+        if ($patient) {
+            if (!empty($request->name)) {
+                $patient->name = $request->name;
+            }
+
+            if (!empty($request->email)) {
+                $patient->email = $request->email;
+            }
+
+            if (!empty($request->phone)) {
+                $patient->contact_no = $request->phone;
+            }
+
+            if (!empty($request->address)) {
+                $patient->address = $request->address;
+            }
+
+            if (!empty($request->height)) {
+                $patient->height = $request->height;
+            }
+
+            if (!empty($request->weight)) {
+                $patient->weight = $request->weight;
+            }
+
+            if (!empty($request->bloodgroup)) {
+                $patient->bloodgroup = $request->bloodgroup;
+            }
+
+            if (!empty($request->file)) {
+                $fname = "pp_" . time();
+                $filename = $fname . '.' . request()->file->getClientOriginalExtension();
+                $patient->profile_pic = $filename;
+                $request->file->storeAs('patients', $filename);
+            }
+
+            $patient->save();
+        }
+        return redirect()->back()
+            ->with('success', 'You have successfully updated your profile.');
     }
 
     /**
@@ -60,7 +108,7 @@ class PatientController extends Controller
      */
     public function show(patient $patient)
     {
-        return view('patients.show',compact('patient'));
+        return view('patients.show', compact('patient'));
     }
 
     /**
@@ -71,7 +119,7 @@ class PatientController extends Controller
      */
     public function edit(patient $patient)
     {
-        return view('patients.edit',compact('patient'));
+        return view('patients.edit', compact('patient'));
     }
 
     /**
@@ -81,20 +129,6 @@ class PatientController extends Controller
      * @param  \App\patient  $patient
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, patient $patient)
-    {
-        //
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'password' => 'required',
-        ]);
-  
-        patient::create($request->all());
-   
-        return redirect()->route('patients.index')
-                        ->with('success','Patient Info updated successfully.');
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -105,8 +139,8 @@ class PatientController extends Controller
     public function destroy(patient $patient)
     {
         $patient->delete();
-  
+
         return redirect()->route('patients.index')
-                        ->with('success','Patient deleted successfully');
+            ->with('success', 'Patient deleted successfully');
     }
 }

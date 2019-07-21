@@ -12,7 +12,7 @@
                 </div>
             </div>
 
-            <div class="card" style="width: 36rem; height: 18rem;">
+            <div class="card" style="width: 18rem;">
                 <img src="appointment.jpg" class="card-img-top" alt="...">
                 <div class="card-body">
                     <h5 class="card-title">Get an Appointment</h5>
@@ -25,29 +25,29 @@
         </div>
 
         <div class="col-md-8">
-            
+
             <div class="card" style="width: 18rem;">
-            
+
                 <div class="card-body">
                     <h5 class="card-title">My Appointments</h5>
                     <p class="card-text"></p>
                     <a href="/show_pat_appointments" class="btn btn-primary stretched-link">View list</a>
                 </div>
-        
+
             </div>
 
             <div class="card" style="width: 18rem;">
-            
+
                 <div class="card-body">
                     <h5 class="card-title">My Prescriptions</h5>
                     <p class="card-text"></p>
                     <a href="/show_pat_prescriptions" class="btn btn-primary stretched-link">View list</a>
                 </div>
-            
+
             </div>
 
         </div>
-        
+
 
     </div>
 </div>

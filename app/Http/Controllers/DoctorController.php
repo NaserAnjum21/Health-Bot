@@ -141,18 +141,46 @@ class DoctorController extends Controller
 
         $doctor= Doctor::find($doc_id);
 
-        if($doctor)
-        {
-            if(!empty($request->address))
-                $doctor->work_address= $request->address;
-            if(!empty($request->qualification))
-                $doctor->qualification= $request->qualification;
-            if(!empty($request->speciality))
-                $doctor->speciality= $request->speciality;
+        if ($doctor) {
+            if (!empty($request->name)) {
+                $doctor->name = $request->name;
+            }
+
+            if (!empty($request->email)) {
+                $doctor->email = $request->email;
+            }
+
+            if (!empty($request->phone)) {
+                $doctor->contact_no = $request->phone;
+            }
+
+            if (!empty($request->address)) {
+                $doctor->work_address = $request->address;
+            }
+
+            if (!empty($request->qualification)) {
+                $doctor->qualification = $request->qualification;
+            }
+
+            if (!empty($request->speciality)) {
+                $doctor->speciality = $request->speciality;
+            }
+
+            if (!empty($request->visiting_hours)) {
+                $doctor->visiting_hours = $request->visiting_hours;
+            }
+
+            if (!empty($request->file)) {
+                $fname = "pp_" . time();
+                $filename = $fname . '.' . request()->file->getClientOriginalExtension();
+                $doctor->profile_pic = $filename;
+                $request->file->storeAs('doctors', $filename);
+            }
+
             $doctor->save();
         }
-
-        return redirect()->back()->with('success','Profile updated.');
+        return redirect()->back()
+            ->with('success', 'You have successfully updated your profile.');
     }
 
     /**

@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Auth;
-use DB;
+use App\appointment;
+use App\medicine;
+use App\medicine_log;
+use App\patient;
 use App\prescription;
 use Illuminate\Http\Request;
 
@@ -18,8 +20,8 @@ class PrescriptionController extends Controller
     {
         //
         $prescriptions = prescription::latest()->paginate(10);
-  
-        return view('prescriptions.index',compact('prescriptions'))
+
+        return view('prescriptions.index', compact('prescriptions'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
@@ -39,29 +41,59 @@ class PrescriptionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$app_id)
+    public function store(Request $request, $app_id)
     {
-        /** 
-        *$request->validate([
-        *    'patient_id' => 'required',
-        *]);
-        */
-        $apps = DB::table('appointments')->where([
-            ['id', '=', $app_id],
-        ])->get();
+        /**
+         *$request->validate([
+         *    'patient_id' => 'required',
+         *]);
+         */
+        $app = appointment::find($app_id);
 
-        DB::table('prescriptions')->insert([
-            'patient_id' => $apps[0]->patient_id,
-            'doctor_id' => $apps[0]->doctor_id,
-            'time' => now(),
-            'symptoms' => $request->symptoms,
-            'directions' => $request->directions,
-            'next_visit_date' => $request->next_visit_date,
-            ]);
-        
+        $pres = new prescription();
+        $pres->patient_id = $app->patient_id;
+        $pres->doctor_id = $app->doctor_id;
+        $pres->time = now();
+        $pres->symptoms = $request->symptoms;
+        $pres->directions = $request->directions;
+        $pres->next_visit_date = $request->next_visit_date;
+        $pres->save();
+
+        $medicines = $request->medicine;
+        $index = 0;
+
+        foreach ($medicines as $med) {
+
+            $med_log = new medicine_log;
+
+            $imed = medicine::where('trade_name', '=', $med)->first();
+
+            if ($imed) {
+                $med_log->medicine_id = $imed->id;
+            }
+
+            if ($request->dose[$index]) {
+                $med_log->dose = $request->dose[$index];
+            }
+
+            $med_log->prescription_id = $pres->id;
+            $med_log->save();
+
+            $index = $index + 1;
+
+        }
 
         return redirect('show_doc_appointments')
-                        ->with('success','Prescription Given successfully.');
+            ->with('success', 'Prescription Given successfully.');
+
+    }
+
+    public function show_prescription_form($app_id)
+    {
+        $app = appointment::find($app_id);
+        $patient = patient::find($app->patient_id);
+
+        return view('pages.doc_prescription', ['app' => $app], ['patient' => $patient]);
 
     }
 
@@ -74,7 +106,7 @@ class PrescriptionController extends Controller
     public function show(prescription $prescription)
     {
         //
-        return view('prescriptions.show',compact('prescription'));
+        return view('prescriptions.show', compact('prescription'));
     }
 
     /**
@@ -85,7 +117,7 @@ class PrescriptionController extends Controller
      */
     public function edit(prescription $prescription)
     {
-        return view('prescriptions.edit',compact('prescription'));
+        return view('prescriptions.edit', compact('prescription'));
     }
 
     /**
@@ -112,6 +144,6 @@ class PrescriptionController extends Controller
         $prescription->delete();
 
         return redirect()->route('prescriptions.index')
-                        ->with('success','Prescription removed successfully.');
+            ->with('success', 'Prescription removed successfully.');
     }
 }

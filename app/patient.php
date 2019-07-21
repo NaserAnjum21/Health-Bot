@@ -2,9 +2,8 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Patient extends Authenticatable
 {
@@ -14,7 +13,7 @@ class Patient extends Authenticatable
     protected $guard = 'patient';
 
     protected $fillable = [
-        'name', 'email', 'password', 'address', 'height', 'weight', 'bloodgroup', 'bloodpressure',
+        'name', 'email', 'password', 'address', 'height', 'weight', 'bloodgroup', 'bloodpressure', 'profile_pic', 'contact_no',
     ];
 
     protected $hidden = [

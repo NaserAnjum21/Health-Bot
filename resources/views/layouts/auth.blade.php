@@ -73,8 +73,8 @@
                 transition-duration: 0.4s;
             }
             .button1 {
-                background-color: #333; 
-                color: white; 
+                background-color: #333;
+                color: white;
                 border: 2px solid #505050;
             }
             .button1:hover {
@@ -88,7 +88,7 @@
         <div id="app">
             <nav style="background-color:#333;" class="navbar navbar-expand-md navbar-light navbar-laravel">
                 <div class="container">
-                    
+
                     @auth('doctor')
                     <a class="hel-font" href="{{ url('/doctor') }}">
                         Health
@@ -138,18 +138,21 @@
                             <li class="nav-item">
                                 <a style="color:white;" class="nav-link" href="/show_pat_prescriptions">Prescriptions</a>
                             </li>
+                            <li class="nav-item">
+                                <a style="color:white;" class="nav-link" href="/patProfile">Profile</a>
+                            </li>
                             @endauth
 
                             @auth('doctor')
 
                             <li class="nav-item">
-                                <a style="color:white;" class="nav-link" href="/updateDocProfile">Profile</a>
+                                <a style="color:white;" class="nav-link" href="/docProfile">Profile</a>
                             </li>
-                            
+
                             <li class="nav-item">
                                 <a style="color:white;" class="nav-link" href="/show_doc_appointments">Appointments</a>
                             </li>
-                            
+
                             @endauth
 
                             <!-- Authentication Links -->
@@ -172,7 +175,7 @@
                                 </a>
                                 @endauth
 
-                                
+
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
@@ -190,7 +193,7 @@
                                     </form>
                                 </div>
                             </li>
-                            
+
                         </ul>
                     </div>
                 </div>

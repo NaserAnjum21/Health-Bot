@@ -4,9 +4,10 @@
 
 @section('content')
 <div class="container">
+    @include('flash_message')
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            
+        <div class="col-md-11">
+
         <table class="table table-hover">
             <thead>
                 <tr>
@@ -25,9 +26,9 @@
                     <!-- Trigger the modal with a button -->
                     <td>
 
-                    @if (strpos($app->status, 'pending') !== false)
+                    @if (strcmp($app->status, 'pending') == 0)
 
-                    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal{{$app->id}}">Confirm</button>
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal{{$app->id}}">Confirm</button>
 
                     <!-- Modal -->
                     <div id="myModal{{$app->id}}" class="modal fade" role="dialog">
@@ -36,28 +37,28 @@
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    
+
                                     <h4 class="modal-title">Appointment Confirmation</h4>
                                 </div>
                                 <div class="modal-body">
                                 <form action="/confirm/{{$app->id}}" method="POST">
                                 @csrf
-                            
+
                                 <div class="row">
-                                    
+
 
                                     <div class="col-xs-12 col-sm-12 col-md-12">
                                         <div class="form-group">
                                             <strong>Do you want to confirm the appointment?</strong>
-                                            
+
                                         </div>
                                     </div>
-                                    
+
                                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                             <button type="submit" class="btn btn-primary">Confirm</button>
                                     </div>
                                 </div>
-                            
+
                             </form>
                                 </div>
                                 <div class="modal-footer">
@@ -68,17 +69,95 @@
                         </div>
                     </div>
 
-                </td>
+                    <!-- End Modal -->
+
+
+                @else
+
+                <button type="button" class="btn">Confirm</button>
 
                 @endif
 
-
-                @if (strpos($app->status, 'confirmed') !== false)
+                </td>
 
                 <td>
 
-                <button type="button" class="btn btn-default" data-toggle="modal" data-target="#presModal{{$app->id}}">Prescribe</button>
+                @if(strcmp($app->status, 'pending') == 0)
 
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#reschModal{{$app->id}}">Reschedule</button>
+
+                    <!-- Modal -->
+                    <div id="reschModal{{$app->id}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title">Appointment Reschedule</h4>
+                                </div>
+                                <div class="modal-body">
+                                <form action="/reschedule/{{$app->id}}" method="POST">
+                                @csrf
+
+                                <div class="row">
+
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Date:</strong>
+                                        <input type="date" name="date" class="form-control" placeholder="Visit date">
+                                    </div>
+                                </div>
+
+                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                    <div class="form-group">
+                                        <strong>Time:</strong>
+                                        <input type="time" name="time" class="form-control" placeholder="Visit time">
+                                    </div>
+                                </div>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <strong>Do you want to confirm the appointment?</strong>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
+                                            <button type="submit" class="btn btn-primary">Confirm</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- End Modal -->
+
+                @else
+
+                <button type="button" class="btn">Reschedule</button>
+
+                @endif
+
+                </td>
+
+
+
+                <td>
+
+                @if (strcmp($app->status, 'finished') == 0)
+
+
+                <!-- <button type="button" class="btn btn-success" data-toggle="modal" data-target="#presModal{{$app->id}}">Prescribe</button> -->
+                <button type="button" class="btn btn-success" onclick="location.href='showPrescForm/{{$app->id}}'">Prescribe</button>
                     <!-- Modal -->
                     <div id="presModal{{$app->id}}" class="modal fade" role="dialog">
                         <div class="modal-dialog">
@@ -86,22 +165,22 @@
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    
+
                                     <h4 class="modal-title">Prescription</h4>
                                 </div>
                                 <div class="modal-body">
                                 <form action="/storePresc/{{$app->id}}" method="POST">
                                 @csrf
-                            
+
                                 <div class="row">
                                             <div class="col-xs-12 col-sm-12 col-md-12">
                                                 <div class="form-group">
                                                     <strong>Patient Name:</strong>
                                                     <input class="form-control" type="text" placeholder="{{ \App\Patient::findOrFail($app->patient_id)->name }}"  readonly>
-                                                   
+
                                                 </div>
                                             </div>
-                        
+
 
                                             <div class="col-xs-12 col-sm-12 col-md-12">
                                                 <div class="form-group">
@@ -129,7 +208,7 @@
 
                                             </div>
 
-                                            
+
 
                                             <div class="col-xs-12 col-sm-12 col-md-12">
                                                 <div class="form-group">
@@ -151,12 +230,12 @@
                                                     <input type="date" name="next_visit_date" class="form-control" placeholder="Next Visit">
                                                 </div>
                                             </div>
-                                            
+
                                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
                                         </div>
-                                    
+
                                     </form>
                                 </div>
                                 <div class="modal-footer">
@@ -167,9 +246,13 @@
                         </div>
                     </div>
 
-                </td>
+
+                @else
+                    <button type="button" class="btn">Prescribe</button>
 
                 @endif
+
+                </td>
 
                 </tr>
                 @endforeach
