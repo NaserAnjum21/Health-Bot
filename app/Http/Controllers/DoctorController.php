@@ -206,7 +206,7 @@ class DoctorController extends Controller
         if (count ( $doctors ) > 0)
             return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withDetails ( $doctors )->withQuery ( $q );
         else
-            return view ( 'pages.select_doctor' )->withMessage ( 'No Details found. Try to search again !' );
+            return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withMessage ( 'No Details found. Try to search again !' );
     }
 
     public function searchDoctor(Request $request)

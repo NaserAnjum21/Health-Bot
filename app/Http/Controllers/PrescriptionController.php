@@ -93,7 +93,7 @@ class PrescriptionController extends Controller
         $app = appointment::find($app_id);
         $patient = patient::find($app->patient_id);
 
-        return view('pages.doc_prescription', ['app' => $app], ['patient' => $patient]);
+        return view('pages.give_prescription', ['app' => $app], ['patient' => $patient]);
 
     }
 

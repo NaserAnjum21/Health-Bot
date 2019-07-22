@@ -141,6 +141,9 @@
                             <li class="nav-item">
                                 <a style="color:white;" class="nav-link" href="/patProfile">Profile</a>
                             </li>
+                            <li class="nav-item">
+                                <a style="color:white;" class="nav-link" href="/show_pat_medicines">Medicines</a>
+                            </li>
                             @endauth
 
                             @auth('doctor')
@@ -151,6 +154,10 @@
 
                             <li class="nav-item">
                                 <a style="color:white;" class="nav-link" href="/show_doc_appointments">Appointments</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a style="color:white;" class="nav-link" href="/show_doc_prescriptions">Prescriptions</a>
                             </li>
 
                             @endauth

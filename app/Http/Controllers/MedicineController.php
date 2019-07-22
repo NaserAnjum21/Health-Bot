@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use DB;
 use App\medicine;
+use App\medicine_log;
 use Illuminate\Http\Request;
 
 class MedicineController extends Controller
@@ -63,6 +64,8 @@ class MedicineController extends Controller
     {
         //
     }
+
+    
 
     /**
      * Show the form for editing the specified resource.

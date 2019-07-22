@@ -236,8 +236,7 @@ body{
                 <div class="row">
                     <div class="col-md-4">
                         <div class="profile-work">
-                            <p>SOCIAL MEDIA LINK</p>
-                            <a href="">Website Link</a><br/>
+                            <p>SOCIAL MEDIA LINKS</p>
                             <a href="">Facebook Profile</a><br/>
 
                         </div>

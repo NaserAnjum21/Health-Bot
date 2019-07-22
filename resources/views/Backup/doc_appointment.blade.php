@@ -357,28 +357,64 @@
                                     <h4 class="modal-title">Patient Prescription History</h4>
                                 </div>
                                 <div class="modal-body">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                        <th scope="col">Doctor Name</th>
-                                        <th scope="col">Symptoms</th>
-                                        <th scope="col">Directions</th>
-                                        <th scope="col">Date</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach ($prescriptions as $prescription)
-                                            @if( $app->patient_id == $prescription->patient_id)
-                                            <tr>
-                                                <td>{{ \App\Doctor::findOrFail($prescription->doctor_id)->name }}</td>
-                                                <td>{{$prescription->symptoms}}</td>
-                                                <td>{{$prescription->directions}}</td>
-                                                <td>{{$prescription->next_visit_date}}</td>
-                                            </tr>
-                                            @endif
-                                        @endforeach
-                                    </tbody>
-                                </table>
+                                <form action="#" method="POST">
+                                @csrf
+                                <div class="row">
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Name:</strong>
+                                                    <input type="text" name="name" class="form-control" placeholder="{{\App\Patient::findOrFail($app->patient_id)->name}}" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Email:</strong>
+                                                    <input type="email" name="email" class="form-control" placeholder="{{\App\Patient::findOrFail($app->patient_id)->email}}" readonly>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Phone:</strong>
+                                                    <input type="text" name="phone" class="form-control" placeholder="{{\App\Patient::findOrFail($app->patient_id)->contact_no}}" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Address:</strong>
+                                                    <input type="text" name="address" class="form-control" placeholder="{{\App\Patient::findOrFail($app->patient_id)->address}}" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Height(cm):</strong>
+                                                    <input type="text" name="height" class="form-control" placeholder="{{\App\Patient::findOrFail($app->patient_id)->height}}" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Weight(kg):</strong>
+                                                    <input type="text" name="weight" class="form-control" placeholder="{{\App\Patient::findOrFail($app->patient_id)->weight}}" readonly>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Blood Group:</strong>
+                                                    <input type="text" name="bloodgroup" class="form-control" placeholder="{{\App\Patient::findOrFail($app->patient_id)->bloodgroup}}" readonly>
+                                                </div>
+                                            </div>
+                                
+
+
+                                
+                                </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

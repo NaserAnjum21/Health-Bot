@@ -100,11 +100,31 @@ Route::get('show_pat_prescriptions', function () {
     return view('pages.pat_prescription', ['prescriptions' => $prescriptions]);
 });
 
+Route::get('show_doc_prescriptions', function () {
+    $doc_id = Auth::guard('doctor')->id();
+    $prescriptions = DB::table('prescriptions')->where([
+        ['doctor_id', '=', $doc_id],
+    ])->get();
+
+    return view('pages.doc_prescription', ['prescriptions' => $prescriptions]);
+});
+
+Route::get('show_pat_medicines', function()
+{
+    /* $pat_id= Auth::guard('patient')->id();
+    $prescriptions = DB::table('prescriptions')->where([
+        ['patient_id', '=', $pat_id],
+    ])->get(); */
+    return view('pages.pat_medicine');
+});
+
 Route::get('show_doc_appointments', function () {
     $doc_id = Auth::guard('doctor')->id();
     $apps = DB::table('appointments')->where([
         ['doctor_id', '=', $doc_id],
     ])->get();
+
+    $prescriptions = DB::table('prescriptions')->get();
 
     foreach ($apps as $app) {
         if ($app->time < now()) {
@@ -123,7 +143,7 @@ Route::get('show_doc_appointments', function () {
 
     //$patients= DB::table('patients')->get();
 
-    return view('pages.doc_appointment', ['apps' => $apps]);
+    return view('pages.doc_appointment', ['apps' => $apps],['prescriptions'=>$prescriptions]);
 });
 
 Route::get('admin', function () {

@@ -43,6 +43,9 @@
 		<div class="panel panel-default">
 			<div class="panel-heading"></div>
 			<div class="panel-body">
+				
+			<a href="bodymap" class="btn btn-primary stretched-link">Don't know any doctor? Tell us about your problem</a>
+			
 			<form action="doctorSearch" method="POST" role="search">
 				{{ csrf_field() }}
 				<div class="input-group">
@@ -53,11 +56,11 @@
 						</button>
 					</span>
 				</div>
-				<a href="bodymap" class="btn btn-primary stretched-link">Search by bodymap</a>
+				
 			</form>
 
 	
-						@if (1)
+						@if (count($doctors)>0)
 							@foreach ($doctors as $doctor)
 									<div class="card" style="background-image:url(img/bg5.jpg); width: 52rem; padding:20px 40px; height:28rem;">
 										<div class="row">
