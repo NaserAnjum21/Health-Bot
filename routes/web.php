@@ -28,6 +28,31 @@ Route::view('/home', 'home')->middleware('auth');
 Route::view('/patient', 'patient');
 Route::view('/doctor', 'doctor');
 
+//most appointed doctors
+/*
+$doctors = DB::table('appointments')
+        ->select(DB::raw('doctor_id', 'count(*) as app_count'))
+        ->groupBy('doctor_id')
+        ->get();
+
+    return view('pages.admin_most_app_doc', ['doctors' => $doctors]);
+*/
+
+Route::get('admin_report', function () {
+    $most_visited_doc = DB::table("doctors")
+        ->select("doctors.*",
+            DB::raw("(SELECT count(*) FROM appointments
+                WHERE appointments.doctor_id = doctors.id
+                GROUP BY appointments.doctor_id) as app_count"))
+        ->get();
+
+    $most_recom_doc = DB::table('doctors')->where([
+        ['is_doctor', '=', '1'],
+    ])->orderBy(DB::raw("`rate_sum` / `rate_count`"), 'desc')->get();
+
+    return view('pages.admin_report', ['most_visited_doc' => $most_visited_doc], ['most_recom_doc' => $most_recom_doc]);
+});
+
 Route::get('appointments', function () {
     return view('pages.appointments');
 });
