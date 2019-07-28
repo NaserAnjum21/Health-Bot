@@ -146,6 +146,7 @@ Route::get('show_doc_appointments', function () {
     return view('pages.doc_appointment', ['apps' => $apps],['prescriptions'=>$prescriptions]);
 });
 
+
 Route::get('admin', function () {
     return view('admin');
 });
@@ -155,6 +156,8 @@ Route::resource('doctors', 'DoctorController');
 Route::resource('prescriptions', 'PrescriptionController');
 Route::resource('medicines', 'MedicineController');
 Route::resource('appointments', 'AppointmentController');
+
+Route::get('admin_report','AdminController@admin_report');
 
 /* Route::get('/home', 'HomeController@index')->name('home'); */
 Route::post('storeApp/{id}', 'AppointmentController@store');

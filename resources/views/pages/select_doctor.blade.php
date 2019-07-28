@@ -125,6 +125,9 @@
 														<a style="color:#A0A0A0;">Visiting Hours : </a>{{$doctor->visiting_hours}}
 													</p>
 													<p class="card-text">
+														<a style="color:#A0A0A0;">Visiting Fee: </a>{{$doctor->fee}} Tk
+													</p>
+													<p class="card-text">
 														<a style="color:#A0A0A0;">Contact : </a>{{$doctor->contact_no}}
 													</p>
 													<p class="card-text">

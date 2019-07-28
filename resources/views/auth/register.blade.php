@@ -1,4 +1,8 @@
-@extends('layouts.auth')
+@extends('layouts.app')
+
+<title>
+    HealthBot | Register
+</title>
 
 @section('content')
 <div class="container">

@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+<title>
+    HealthBot | Log in
+</title>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">

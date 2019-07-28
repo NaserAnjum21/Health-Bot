@@ -170,6 +170,10 @@ class DoctorController extends Controller
                 $doctor->visiting_hours = $request->visiting_hours;
             }
 
+            if (!empty($request->fee)) {
+                $doctor->fee= $request->fee;
+            }
+
             if (!empty($request->file)) {
                 $fname = "pp_" . time();
                 $filename = $fname . '.' . request()->file->getClientOriginalExtension();

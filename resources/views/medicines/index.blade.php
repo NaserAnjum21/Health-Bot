@@ -1,4 +1,25 @@
- @extends('layouts.auth')
+@extends('layouts.auth')
+
+ <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.7.0/css/all.css' integrity='sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ' crossorigin='anonymous'>
+
+ <style>
+    body {
+        background: url(img/bg11.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+</style>
 
 @section('content')
 <div class="container">
@@ -6,7 +27,7 @@
 
     <div class="col-md-8">
 
-    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal">Add Medicine</button>
+    <button type="button" class="btn btn-default" data-toggle="modal" data-target="#myModal"><i class='fas fa-plus-circle' style="padding:5px; font-size:18px;"></i>Add Medicine</button>
 
         <!-- Modal -->
         <div id="myModal" class="modal fade" role="dialog">
@@ -65,7 +86,7 @@
 
         <div class="col-md-8">
             
-        <table class="table table-hover">
+        <table class="table table-hover"  style="color:white;">
             <thead>
                 <tr>
                 <th scope="col">Medicine id</th>
