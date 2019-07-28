@@ -173,7 +173,7 @@
         <div class="row justify-content-center">
             <div class="col-md-3" style="margin: 20px;">
 
-                @{{ initLocalClocks() }}
+                
 
                 <article class="clock">
                     <div class="hours-container">

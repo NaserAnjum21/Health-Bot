@@ -1,5 +1,27 @@
 @extends('layouts.auth')
 
+<style>
+    body {
+        background: url(img/bg11.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+</style>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-3-typeahead/4.0.1/bootstrap3-typeahead.min.js"></script>
 
 @section('content')
@@ -8,7 +30,7 @@
     <div class="row justify-content-center">
         <div class="col-md-11">
 
-        <table class="table table-hover">
+        <table class="table table-hover" style="color:white;">
             <thead>
                 <tr>
                 <th scope="col">Patient Name</th>

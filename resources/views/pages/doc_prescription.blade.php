@@ -4,12 +4,34 @@
     HealthBot | Prescription
 </title>
 
+<style>
+    body {
+        background: url(img/bg11.jpg) no-repeat center center fixed;
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+
+    }
+
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    th,
+    td {
+        text-align: left;
+        padding: 8px;
+    }
+</style>
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
             
-        <table class="table table-hover">
+        <table class="table table-hover" style="color:white;">
             <thead>
                 <tr>
                 <th scope="col">Patient Name</th>
