@@ -31,25 +31,39 @@
                         </div>
                     </div>
 
-                    <div class="col-xs-12 col-sm-12 col-md-12">
-                        <div class="form-group">
-                        <strong>Disease:</strong>
-                        <input class="form-control" type="text" name="disease" placeholder="Diagnosed Disease">
+                    <div class="form-group row field_wrapper2">
+
+                        <div class="col-md-10">
+                                <strong>Disease:</strong>
+                                <input class="form-control" type="text" name="disease[]" placeholder="Diagnosed disease">
+
                         </div>
+
+                        <div class="col-md-2">
+                            <br><button class="btn btn-success add_button2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                        </div>
+
+
                     </div>
 
 
                     <div class="form-group row field_wrapper">
 
-                        <div class="col-md-6">
+                        <div class="col-md-5">
                                 <strong>Medicine:</strong>
                                 <input class="form-control" type="text" name="medicine[]" placeholder="Medicine">
 
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                                 <strong>Dose:</strong>
                                 <input class="form-control" type="text" name="dose[]" placeholder="Dose">
+
+                        </div>
+
+                        <div class="col-md-2">
+                                <strong>Duration:</strong>
+                                <input class="form-control" type="text" name="duration[]" placeholder="Duration">
 
                         </div>
 
@@ -67,8 +81,8 @@
                             var addButton2 = $('.add_button2');
                             var wrapper = $('.field_wrapper');
                             var wrapper2 = $('.field_wrapper2');  //Input field wrapper
-                            var fieldHTML = '<div class="col-md-6"><strong>Medicine:</strong><input class="form-control" type="text" name="medicine[]" placeholder="Medicine"></div><div class="col-md-4"><strong>Dose:</strong><input class="form-control" type="text" name="dose[]" placeholder="Dose"></div><div class="col-md-2"><br><button class="btn btn-danger remove_button" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button></div>'; //New input field html
-                            var fieldHTML2 = '<div class="col-md-10"><strong>Disease:</strong><input class="form-control" type="text" name="disease[]" placeholder="Diagnosed Disease"></div><br><button class="btn btn-danger remove_button2" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button></div>'; //New input field html
+                            var fieldHTML = '<div class="col-md-5"><strong>Medicine:</strong><input class="form-control" type="text" name="medicine[]" placeholder="Medicine"></div><div class="col-md-3"><strong>Dose:</strong><input class="form-control" type="text" name="dose[]" placeholder="Dose"></div><div class="col-md-2"><strong>Duration:</strong><input class="form-control" type="text" name="duration[]" placeholder="Duration"></div><div class="col-md-2"><br><button class="btn btn-danger remove_button" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button></div>'; //New input field html
+                            var fieldHTML2 = '<div class="col-md-10"><strong>Disease:</strong><input class="form-control" type="text" name="disease[]" placeholder="Diagnosed Disease"></div><div class="col-md-2"><br><button class="btn btn-danger remove_button2" type="button"><i class="glyphicon glyphicon-remove"></i> Remove</button></div>'; //New input field html
                             var x = 1; //Initial field counter is 1
                             var y = 1;
 
@@ -94,13 +108,15 @@
                                 e.preventDefault();
                                 $(this).parent().prev().remove();
                                 $(this).parent().prev().remove();
+                                $(this).parent().prev().remove();
                                 $(this).parent().remove(); //Remove field html
                                 x--; //Decrement field counter
                             });
 
                             $(wrapper2).on('click', '.remove_button2', function(e){
                                 e.preventDefault();
-                                $(this).parent().remove(); //Remove field html
+                                $(this).parent().prev().remove(); //Remove field html
+                                $(this).parent().remove();
                                 y--; //Decrement field counter
                             });
                         });

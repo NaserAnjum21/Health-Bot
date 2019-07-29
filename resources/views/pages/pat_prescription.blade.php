@@ -21,6 +21,9 @@
         text-align: left;
         padding: 8px;
     }
+    .modal{
+        color: grey;
+    }
 </style>
 
 @section('content')

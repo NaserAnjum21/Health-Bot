@@ -17,8 +17,11 @@
         text-align: left;
         padding: 8px;
     }
-    h4 {
+    .h4 {
         color: black;
+    }
+    .modal{
+        color: grey;
     }
 </style>
 

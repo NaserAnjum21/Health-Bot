@@ -60,9 +60,10 @@ Route::get('search_doctor', function () {
 });
 
 Route::get('select_doctor', function () {
+    
     $doctors = DB::table('doctors')->where([
         ['is_doctor', '=', '1'],
-    ])->orderBy(DB::raw("`rate_sum` / `rate_count`"), 'desc')->get();
+    ])->orderByraw(' 6* rate_sum / rate_count - 4* (fee/100) DESC')->get();
 
     return view('pages.select_doctor', ['doctors' => $doctors]);
 });
@@ -111,10 +112,21 @@ Route::get('show_doc_prescriptions', function () {
 
 Route::get('show_pat_medicines', function()
 {
-    /* $pat_id= Auth::guard('patient')->id();
-    $prescriptions = DB::table('prescriptions')->where([
+    $pat_id= Auth::guard('patient')->id();
+
+    /*
+    $prescriptions= DB::table('prescriptions')->where([
         ['patient_id', '=', $pat_id],
-    ])->get(); */
+    ])->get(); 
+    
+    foreach ($prescriptions as $pres)
+    {
+        $med_log = DB::table('medicine_logs')->where([
+            ['prescription_id', '=', $pres->id],
+        ])->get(); 
+    }*/
+
+    
     return view('pages.pat_medicine');
 });
 
