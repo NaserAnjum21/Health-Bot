@@ -28,31 +28,6 @@ Route::view('/home', 'home')->middleware('auth');
 Route::view('/patient', 'patient');
 Route::view('/doctor', 'doctor');
 
-//most appointed doctors
-/*
-$doctors = DB::table('appointments')
-        ->select(DB::raw('doctor_id', 'count(*) as app_count'))
-        ->groupBy('doctor_id')
-        ->get();
-
-    return view('pages.admin_most_app_doc', ['doctors' => $doctors]);
-*/
-
-Route::get('admin_report', function () {
-    $most_visited_doc = DB::table("doctors")
-        ->select("doctors.*",
-            DB::raw("(SELECT count(*) FROM appointments
-                WHERE appointments.doctor_id = doctors.id
-                GROUP BY appointments.doctor_id) as app_count"))
-        ->get();
-
-    $most_recom_doc = DB::table('doctors')->where([
-        ['is_doctor', '=', '1'],
-    ])->orderBy(DB::raw("`rate_sum` / `rate_count`"), 'desc')->get();
-
-    return view('pages.admin_report', ['most_visited_doc' => $most_visited_doc], ['most_recom_doc' => $most_recom_doc]);
-});
-
 Route::get('appointments', function () {
     return view('pages.appointments');
 });
@@ -85,9 +60,10 @@ Route::get('search_doctor', function () {
 });
 
 Route::get('select_doctor', function () {
+    
     $doctors = DB::table('doctors')->where([
         ['is_doctor', '=', '1'],
-    ])->orderBy(DB::raw("`rate_sum` / `rate_count`"), 'desc')->get();
+    ])->orderByraw(' 6* rate_sum / rate_count - 4* (fee/100) DESC')->get();
 
     return view('pages.select_doctor', ['doctors' => $doctors]);
 });
@@ -136,10 +112,21 @@ Route::get('show_doc_prescriptions', function () {
 
 Route::get('show_pat_medicines', function()
 {
-    /* $pat_id= Auth::guard('patient')->id();
-    $prescriptions = DB::table('prescriptions')->where([
+    $pat_id= Auth::guard('patient')->id();
+
+    /*
+    $prescriptions= DB::table('prescriptions')->where([
         ['patient_id', '=', $pat_id],
-    ])->get(); */
+    ])->get(); 
+    
+    foreach ($prescriptions as $pres)
+    {
+        $med_log = DB::table('medicine_logs')->where([
+            ['prescription_id', '=', $pres->id],
+        ])->get(); 
+    }*/
+
+    
     return view('pages.pat_medicine');
 });
 
@@ -171,6 +158,7 @@ Route::get('show_doc_appointments', function () {
     return view('pages.doc_appointment', ['apps' => $apps],['prescriptions'=>$prescriptions]);
 });
 
+
 Route::get('admin', function () {
     return view('admin');
 });
@@ -180,6 +168,8 @@ Route::resource('doctors', 'DoctorController');
 Route::resource('prescriptions', 'PrescriptionController');
 Route::resource('medicines', 'MedicineController');
 Route::resource('appointments', 'AppointmentController');
+
+Route::get('admin_report','AdminController@admin_report');
 
 /* Route::get('/home', 'HomeController@index')->name('home'); */
 Route::post('storeApp/{id}', 'AppointmentController@store');

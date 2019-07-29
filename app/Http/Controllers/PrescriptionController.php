@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\appointment;
 use App\medicine;
 use App\medicine_log;
+use App\Disease_log;
+use App\Disease;
 use App\patient;
 use App\prescription;
 use Illuminate\Http\Request;
@@ -60,6 +62,7 @@ class PrescriptionController extends Controller
         $pres->save();
 
         $medicines = $request->medicine;
+        $diseases = $request->disease;
         $index = 0;
 
         foreach ($medicines as $med) {
@@ -76,8 +79,31 @@ class PrescriptionController extends Controller
                 $med_log->dose = $request->dose[$index];
             }
 
+            if ($request->duration[$index]) {
+                $med_log->course_duration = $request->duration[$index];
+            }
+
             $med_log->prescription_id = $pres->id;
             $med_log->save();
+
+            $index = $index + 1;
+
+        }
+
+        $index = 0;
+
+        foreach ($diseases as $dis) {
+
+            $dis_log = new disease_log;
+
+            $idis = disease::where('name', '=', $dis)->first();
+
+            if ($idis) {
+                $dis_log->disease_id = $idis->id;
+            }
+
+            $dis_log->prescription_id = $pres->id;
+            $dis_log->save();
 
             $index = $index + 1;
 

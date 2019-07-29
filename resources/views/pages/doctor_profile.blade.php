@@ -223,6 +223,13 @@ body{
                                                 </div>
                                             </div>
 
+                                            <div class="col-xs-12 col-sm-12 col-md-12">
+                                                <div class="form-group">
+                                                    <strong>Visiting Fee:</strong>
+                                                    <input type="text" name="fee" class="form-control" placeholder="{{Auth::guard('doctor')->user()->fee}}">
+                                                </div>
+                                            </div>
+
                                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                                     <button type="submit" class="btn btn-primary">Submit</button>
                                             </div>
@@ -319,6 +326,14 @@ body{
                                             </div>
                                             <div class="col-md-6">
                                                 <p>{{ Auth::guard('doctor')->user()->visiting_hours }}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label>Visiting Fee</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <p>{{ Auth::guard('doctor')->user()->fee }}</p>
                                             </div>
                                         </div>
                                         

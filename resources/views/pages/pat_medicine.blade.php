@@ -173,7 +173,7 @@
         <div class="row justify-content-center">
             <div class="col-md-3" style="margin: 20px;">
 
-                
+                @{{ initLocalClocks() }}
 
                 <article class="clock">
                     <div class="hours-container">
@@ -208,7 +208,7 @@
                                 </div>
                                 <div class="col-sm-6" style="padding: 30px 20px;">
                                     <i class="fa fa-check-square" style="font-size:28px;color:green" onclick="move()"></i>
-                                    <a style="font-size:20px;">Taken Ursocol?</a>
+                                    <a style="font-size:20px;">Taken Fexo?</a>
                                 </div>
                             </div>
                         </div>
@@ -223,7 +223,7 @@
                                 </div>
                                 <div class="col-sm-6" style="padding: 30px 20px;">
                                     <i class="fa fa-check-square" style="font-size:28px;color:green" onclick="move()"></i>
-                                    <a style="font-size:20px;">Taken Rupin?</a>
+                                    <a style="font-size:20px;">Nothing to take</a>
                                 </div>
                             </div>
                         </div>
@@ -238,7 +238,10 @@
                                 </div>
                                 <div class="col-sm-6" style="padding: 30px 20px;">
                                     <i class="fa fa-check-square" style="font-size:28px;color:green" onclick="move()"></i>
-                                    <a style="font-size:20px;">Taken Xenim?</a>
+                                    <a style="font-size:20px;">Taken Fexo?</a>
+                                    <br>
+                                    <i class="fa fa-check-square" style="font-size:28px;color:green" onclick="move()"></i>
+                                    <a style="font-size:20px;">Taken Napa?</a>
                                 </div>
                             </div>
                         </div>

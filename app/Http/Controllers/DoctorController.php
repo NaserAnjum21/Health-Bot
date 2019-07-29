@@ -170,6 +170,10 @@ class DoctorController extends Controller
                 $doctor->visiting_hours = $request->visiting_hours;
             }
 
+            if (!empty($request->fee)) {
+                $doctor->fee= $request->fee;
+            }
+
             if (!empty($request->file)) {
                 $fname = "pp_" . time();
                 $filename = $fname . '.' . request()->file->getClientOriginalExtension();
@@ -201,7 +205,7 @@ class DoctorController extends Controller
                         ->orWhere ( 'email', 'LIKE', '%' . $q . '%' )
                         ->orWhere ( 'speciality', 'LIKE', '%' . $q . '%' )
                         ->orWhere ( 'work_address', 'LIKE', '%' . $q . '%' )
-                        ->orderBy(DB::raw("`rate_sum` / `rate_count`"), 'desc')
+                        ->orderByraw(' 6* rate_sum / rate_count - 4* (fee/100) DESC')
                         ->get ();
         if (count ( $doctors ) > 0)
             return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withDetails ( $doctors )->withQuery ( $q );

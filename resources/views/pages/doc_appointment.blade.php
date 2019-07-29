@@ -7,18 +7,21 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-
     }
-
     table {
         border-collapse: collapse;
         width: 100%;
     }
-
     th,
     td {
         text-align: left;
         padding: 8px;
+    }
+    .h4 {
+        color: black;
+    }
+    .modal{
+        color: grey;
     }
 </style>
 

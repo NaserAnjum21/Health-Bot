@@ -92,7 +92,7 @@
                         target = "_self" 
                         onMouseOver = "ShowDoctors('Gastrologist')" 
                         onMouseOut = "ShowDoctors('')"
-                        onclick = "SearchDoctors('Gastrlogist')"/>
+                        onclick = "SearchDoctors('Gastrologist')"/>
                   </map>
                </div>
 					<div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
