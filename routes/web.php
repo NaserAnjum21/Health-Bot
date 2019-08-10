@@ -25,7 +25,10 @@ Route::post('/register/patient', 'Auth\RegisterController@createPatient');
 Route::post('/register/doctor', 'Auth\RegisterController@createDoctor');
 
 Route::view('/home', 'home')->middleware('auth');
-Route::view('/patient', 'patient');
+Route::get('patient', function () {
+    $posts = DB::table('admin_posts')->get();
+    return view('patient', ['posts' => $posts]);
+});
 Route::view('/doctor', 'doctor');
 
 Route::get('appointments', function () {
@@ -114,19 +117,6 @@ Route::get('show_pat_medicines', function()
 {
     $pat_id= Auth::guard('patient')->id();
 
-    /*
-    $prescriptions= DB::table('prescriptions')->where([
-        ['patient_id', '=', $pat_id],
-    ])->get(); 
-    
-    foreach ($prescriptions as $pres)
-    {
-        $med_log = DB::table('medicine_logs')->where([
-            ['prescription_id', '=', $pres->id],
-        ])->get(); 
-    }*/
-
-    
     return view('pages.pat_medicine');
 });
 
@@ -170,6 +160,11 @@ Route::resource('medicines', 'MedicineController');
 Route::resource('appointments', 'AppointmentController');
 
 Route::get('admin_report','AdminController@admin_report');
+
+/* admin_post */
+Route::get('admin_post','AdminController@admin_post');
+Route::post('createPost', 'AdminController@createPost');
+Route::get('removePost/{id}', 'AdminController@removePost');
 
 /* Route::get('/home', 'HomeController@index')->name('home'); */
 Route::post('storeApp/{id}', 'AppointmentController@store');
