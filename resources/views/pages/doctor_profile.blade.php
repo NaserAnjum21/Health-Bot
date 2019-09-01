@@ -24,6 +24,7 @@
     .profile-img img {
         width: 50%;
         height: 25%;
+        object-fit: cover;
     }
 
     .profile-img .file {

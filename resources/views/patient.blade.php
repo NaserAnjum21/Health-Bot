@@ -14,7 +14,6 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-
     }
 
     .links>a {
@@ -70,14 +69,6 @@
 
 
 <div class="container">
-    <!-- <div id="sidebar">
-            <button class="button_sidebar button1">Record Health Statistics</button>
-            <button class="button_sidebar button1">Food Intake</button>
-            <button class="button_sidebar button1">Recent Workouts</button>
-            <button class="button_sidebar button1">Sleep Schedule</button>
-            <button class="button_sidebar button1">Trend Analysis</button>
-        </div>
--->
     <div class="row">
         <div class="column left">
 
@@ -142,7 +133,7 @@
                         </div>
                         <div class="col-sm-6" style="padding:80px 0px;">
                             <div class="links" style="text-align: center;">
-                                <a href="/show_pat_medicines">My Medicines</a>
+                                <a href="/show_pat_medicines/{{Auth::guard('patient')->id()}}">My Medicines</a>
                             </div>
                         </div>
                     </div>

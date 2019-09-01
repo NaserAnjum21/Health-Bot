@@ -37,7 +37,7 @@
                 <th scope="col">Doctor Name</th>
                 <th scope="col">Symptoms</th>
                 <th scope="col">Directions</th>
-                <th scope="col">Date</th>
+                <th scope="col">Next visit date</th>
                 </tr>
             </thead>
             <tbody>
