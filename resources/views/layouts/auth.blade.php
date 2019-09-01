@@ -19,7 +19,7 @@
         <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
         <!-- icon -->
-        <link rel="shortcut icon" href="img/logo.ico" />
+        <link rel="shortcut icon" href="/img/logo.ico" />
 
         <style>
             .hel-font{
@@ -138,6 +138,9 @@
                         <ul class="navbar-nav ml-auto">
                             @auth('patient')
                             <li class="nav-item">
+                                <a style="color:white;" class="nav-link" href="/my_health/{{Auth::guard('patient')->id()}}">My Health</a>
+                            </li>
+                            <li class="nav-item">
                                 <a style="color:white;" class="nav-link" href="/select_doctor">Doctors</a>
                             </li>
                             <li class="nav-item">
@@ -150,7 +153,7 @@
                                 <a style="color:white;" class="nav-link" href="/patProfile">Profile</a>
                             </li>
                             <li class="nav-item">
-                                <a style="color:white;" class="nav-link" href="/show_pat_medicines">Medicines</a>
+                                <a style="color:white;" class="nav-link" href="/show_pat_medicines/{{Auth::guard('patient')->id()}}">Medicines</a>
                             </li>
                             @endauth
 

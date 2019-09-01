@@ -127,7 +127,17 @@ class PrescriptionController extends Controller
     {
         $presc = prescription::find($presc_id);
 
-        return view('pages.show_prescription', ['presc' => $presc]);
+
+        $med_logs = \App\prescription::find($presc_id)->medicine_logs;
+        $dis_logs = \App\prescription::find($presc_id)->disease_logs;
+
+        return view('pages.show_prescription',
+                        compact(
+                            'presc',
+                            'med_logs',
+                            'dis_logs'
+                        )
+                    );
 
     }
 

@@ -113,12 +113,6 @@ Route::get('show_doc_prescriptions', function () {
     return view('pages.doc_prescription', ['prescriptions' => $prescriptions]);
 });
 
-Route::get('show_pat_medicines', function()
-{
-    $pat_id= Auth::guard('patient')->id();
-
-    return view('pages.pat_medicine');
-});
 
 Route::get('show_doc_appointments', function () {
     $doc_id = Auth::guard('doctor')->id();
@@ -158,6 +152,9 @@ Route::resource('doctors', 'DoctorController');
 Route::resource('prescriptions', 'PrescriptionController');
 Route::resource('medicines', 'MedicineController');
 Route::resource('appointments', 'AppointmentController');
+
+Route::get('my_health/{id}','PatientCOntroller@my_health');
+Route::get('show_pat_medicines/{id}','MedicineLogController@pat_medicine');
 
 Route::get('admin_report','AdminController@admin_report');
 

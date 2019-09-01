@@ -17,9 +17,23 @@
             <div class="row">
                     <div class="col-xs-12 col-sm-12 col-md-12">
                         <div class="form-group">
+                            @auth('doctor')
                             <strong>Patient Name:</strong>
-                            <input class="form-control" type="text" placeholder="dummy"  readonly>
+                            <input class="form-control" type="text" placeholder="{{ \App\Patient::findOrFail($presc->patient_id)->name }}"  readonly>
+                            @endauth
 
+                            @auth('patient')
+                            <strong>Doctor Name:</strong>
+                            <input class="form-control" type="text" placeholder="{{ \App\Doctor::findOrFail($presc->doctor_id)->name }}"  readonly>
+                            @endauth
+
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        <div class="form-group">
+                            <strong>Prescribed Date:</strong>
+                            <input type="text" name="date" class="form-control" placeholder="{{ $presc->created_at }}" readonly>
                         </div>
                     </div>
 
@@ -31,51 +45,49 @@
                         </div>
                     </div>
 
-                    <div class="form-group row field_wrapper2">
+                    <div class="col-xs-12 col-sm-12 col-md-12">
+                        
+                        <strong>Diagnosed Diseases:</strong>
+                        <ul class="list-group">
 
-                        <div class="col-md-10">
-                                <strong>Disease:</strong>
-                                <input class="form-control" type="text" name="disease[]" placeholder="Diagnosed disease">
+                            @foreach ($dis_logs as $dis_log)
 
-                        </div>
+                                <li class="list-group-item">{{ \App\Disease::findOrFail($dis_log->disease_id)->name }}</li>
 
-                        <div class="col-md-2">
-                            <br><button class="btn btn-success add_button2" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                        </div>
-
-
-                    </div>
-
-
-                    <div class="form-group row field_wrapper">
-
-                        <div class="col-md-5">
-                                <strong>Medicine:</strong>
-                                <input class="form-control" type="text" name="medicine[]" placeholder="Medicine">
-
-                        </div>
-
-                        <div class="col-md-3">
-                                <strong>Dose:</strong>
-                                <input class="form-control" type="text" name="dose[]" placeholder="Dose">
-
-                        </div>
-
-                        <div class="col-md-2">
-                                <strong>Duration:</strong>
-                                <input class="form-control" type="text" name="duration[]" placeholder="Duration">
-
-                        </div>
-
-                        <div class="col-md-2">
-                            <br><button class="btn btn-success add_button" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
-                        </div>
-
+                            @endforeach    
+                        
+                        </ul>
 
                     </div>
 
                     
 
+                    @foreach ($med_logs as $med_log)
+                    
+                    <div class="form-group row">
+
+                        <div class="col-md-5">
+                                <strong>Medicine:</strong>
+                                <input class="form-control" type="text" name="medicine[]" placeholder="{{ \App\Medicine::findOrFail($med_log->medicine_id)->trade_name }}" readonly>
+
+                        </div>
+
+                        <div class="col-md-4">
+                                <strong>Dose:</strong>
+                                <input class="form-control" type="text" name="dose[]" placeholder="{{$med_log->dose}}" readonly>
+
+                        </div>
+
+                        <div class="col-md-3">
+                                <strong>Duration:</strong>
+                                <input class="form-control" type="text" name="duration[]" placeholder="{{$med_log->course_duration}} days" readonly>
+
+                        </div>
+
+
+                    </div>
+
+                    @endforeach
 
 
                     <div class="col-xs-12 col-sm-12 col-md-12">

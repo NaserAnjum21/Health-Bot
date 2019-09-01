@@ -35,18 +35,18 @@
             <thead>
                 <tr>
                 <th scope="col">Doctor Name</th>
-                <th scope="col">Symptoms</th>
-                <th scope="col">Directions</th>
                 <th scope="col">Date</th>
+                <th scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($prescriptions as $prescription)
                 <tr>
                     <td>{{ \App\Doctor::findOrFail($prescription->doctor_id)->name }}</td>
-                    <td>{{$prescription->symptoms}}</td>
-                    <td>{{$prescription->directions}}</td>
-                    <td>{{$prescription->next_visit_date}}</td>
+                    <td>{{$prescription->created_at}}</td>
+                    <td>
+                        <button type="button" class="btn btn-info" onclick="location.href='showPresc/{{$prescription->id}}'">View Details</button>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>

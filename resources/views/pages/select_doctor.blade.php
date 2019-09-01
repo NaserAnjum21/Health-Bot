@@ -105,8 +105,8 @@
 				<div class="card" style=" background-color: rgb(0,0,0); background-color: rgba(0,0,0, 0.4); margin: 20px; padding:20px 40px;">
 					<div class="row">
 						<div class="col-sm-6" style="padding:10px 30px;">
-							<h5 class="card-title">{{$doctor->name}}</h5>
-							<img src="storage/doctors/{{ $doctor->profile_pic }}" style="width:16rem; height:16rem; padding:15px;" class="card-img-top" alt="...">
+							<h5 class="card-title" style="color:#FFFF66;">{{$doctor->name}}</h5>
+							<img src="storage/doctors/{{ $doctor->profile_pic }}" style="width:16rem; height:16rem; object-fit: cover; padding:15px;" class="card-img-top" alt="...">
 							<p style="padding-left: 60px; padding-top: 30px;">
 								<?php
 								$rate_sum = $doctor->rate_sum;
