@@ -113,6 +113,7 @@ Route::get('show_doc_prescriptions', function () {
     return view('pages.doc_prescription', ['prescriptions' => $prescriptions]);
 });
 
+
 Route::get('show_doc_appointments', function () {
     $doc_id = Auth::guard('doctor')->id();
     $apps = DB::table('appointments')->where([
@@ -171,6 +172,7 @@ Route::post('cancelFromDoc/{id}', 'AppointmentController@cancelFromDoctor');
 
 Route::post('storePresc/{id}', 'PrescriptionController@store');
 Route::get('showPrescForm/{id}', 'PrescriptionController@show_prescription_form');
+Route::get('showPresc/{id}', 'PrescriptionController@show_prescription');
 
 Route::post('updatePat', 'PatientController@update');
 

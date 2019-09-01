@@ -22,6 +22,7 @@ class CreateAppointmentsTable extends Migration
             $table->string('status')->default('pending');
             $table->dateTime('time');
             $table->string('additonal_directions')->nullable();
+            $table->string('cancel_reason')->nullable();
             $table->timestamps();
         });
     }

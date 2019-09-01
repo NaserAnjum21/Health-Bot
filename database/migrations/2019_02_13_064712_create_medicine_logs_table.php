@@ -20,7 +20,7 @@ class CreateMedicineLogsTable extends Migration
             $table->integer('medicine_id')->unsigned();
             $table->foreign('medicine_id')->references('id')->on('medicines')->onDelete('cascade');
             $table->string('dose');
-            $table->string('frequency');
+            $table->string('frequency')->nullable();
             $table->string('course_duration')->nullable();
             $table->string('instructions')->nullable();
             $table->timestamps();

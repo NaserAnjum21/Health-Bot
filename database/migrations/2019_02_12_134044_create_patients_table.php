@@ -27,6 +27,8 @@ class CreatePatientsTable extends Migration
             $table->string('weight')->nullable();
             $table->string('bloodgroup')->nullable();
             $table->string('bloodpressure')->nullable();
+            $table->string('profile_pic')->nullable();
+            $table->string('contact_no')->nullable();
         });
     }
 

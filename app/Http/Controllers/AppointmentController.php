@@ -3,9 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Appointment;
+use App\Doctor;
+use App\Patient;
 use Auth;
 use DB;
 use Illuminate\Http\Request;
+
+use Notification;
+use App\Notifications\MyNotification;
 
 class AppointmentController extends Controller
 {
@@ -67,6 +72,22 @@ class AppointmentController extends Controller
             'time' => $combinedDT,
             'status' => 'pending',
         ]);
+
+        /*
+        $doctor= Doctor::find($dr_id);
+        $patient= Patient::find($pat_id);
+
+        $details = [
+            'greeting' => 'Hi Doctor',
+            'body' => 'You have an appointment request.',
+            'thanks' => 'Thank you.',
+            'actionText' => 'Check details',
+            'actionURL' => url('/show_doc_appointments'),
+            'app_id' => 101
+        ];
+
+        Notification::send($doctor, new MyNotification($details));
+        */
 
         //session()->flash('msg', 'Successfully done the operation.');
         return redirect()->back()->with('success', 'Appointment Request Successfully Done. Wait for confirmation.');

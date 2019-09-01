@@ -25,6 +25,12 @@ class CreateDoctorsTable extends Migration
             $table->string('work_address')->nullable();
             $table->string('qualification')->nullable();
             $table->string('speciality')->nullable();
+            $table->string('contact_no')->nullable();
+            $table->string('visiting_hours')->nullable();
+            $table->integer('rate_sum')->default(0);
+            $table->float('rate_count')->default(0.0001);
+            $table->string('profile_pic')->nullable();
+            $table->integer('fee')->nullable();
         });
     }
 

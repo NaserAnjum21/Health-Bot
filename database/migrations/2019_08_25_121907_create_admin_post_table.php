@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+
 class CreateAdminPostTable extends Migration
 {
     /**
@@ -13,7 +14,7 @@ class CreateAdminPostTable extends Migration
      */
     public function up()
     {
-        Schema::create('admin_post', function (Blueprint $table) {
+        Schema::create('admin_posts', function (Blueprint $table) {
             $table->increments('id');
             $table->string('image')->nullable();
             $table->string('title')->nullable();
@@ -24,7 +25,6 @@ class CreateAdminPostTable extends Migration
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

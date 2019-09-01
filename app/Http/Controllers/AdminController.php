@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\appointment;
 use App\medicine;
@@ -11,11 +9,9 @@ use App\prescription;
 use App\Doctor;
 use App\admin_post;
 use DB;
-
 class AdminController extends Controller
 {
     //
-
     public function getMostGivenMedicine()
     {
         $meds = DB::table("medicines")
@@ -28,7 +24,6 @@ class AdminController extends Controller
             ->get();
         return $meds;
     }
-
     public function getMostDiagnosedDisease()
     {
         $dis = DB::table("diseases")
@@ -41,7 +36,6 @@ class AdminController extends Controller
             ->get();
         return $dis;
     }
-
     public function getHighestRatedDoctors()
     {
         $most_recom_doc = DB::table('doctors')->where([
@@ -49,7 +43,6 @@ class AdminController extends Controller
         ])->orderBy(DB::raw("`rate_sum` / `rate_count`"), 'desc')->get();
         return $most_recom_doc;
     }
-
     public function getMostAppointedDoctors()
     {
         $most_visited_doc = DB::table("doctors")
@@ -62,7 +55,6 @@ class AdminController extends Controller
             ->get();
         return $most_visited_doc;
     }
-
     public function getMostRegularPatients()
     {
         $most_visited_doc = DB::table("patients")
@@ -75,85 +67,65 @@ class AdminController extends Controller
             ->get();
         return $most_visited_doc;
     }
-
     public function getMonthlyStat()
     {
         $cur_month = date('m');
         $total_app = DB::table("appointments")
             ->whereRaw('MONTH(time) = ?', [$cur_month])
             ->count();
-
         $finished_app = DB::table("appointments")
             ->whereRaw('MONTH(time) = ?', [$cur_month])
             ->where('status', 'finished')
             ->count();
-
-
-
         return view(
             'pages.monthly_report',
             compact('total_app', 'finished_app')
         );
     }
-
-
     public function admin_report()
     {
-
         $most_visited_doc = $this->getMostAppointedDoctors();
         $most_recom_doc = $this->getHighestRatedDoctors();
         $most_regular_pat = $this->getMostRegularPatients();
         $most_given_med = $this->getMostGivenMedicine();
         $most_found_dis = $this->getMostDiagnosedDisease();
-
         $cur_month = date('m');
-
         $total_app = DB::table("appointments")
             ->whereRaw('MONTH(time) = ?', [$cur_month])
             ->count();
-
         $finished_app = DB::table("appointments")
             ->whereRaw('MONTH(time) = ?', [$cur_month])
             ->where('status', 'finished')
             ->count();
-
         $pending_app = DB::table("appointments")
             ->whereRaw('MONTH(time) = ?', [$cur_month])
             ->where('status', 'pending')
             ->count();
-
         $cancelled_app = DB::table("appointments")
             ->whereRaw('MONTH(time) = ?', [$cur_month])
             ->where('status', 'cancelled')
             ->count();
-
         $reg_doc = DB::table("doctors")
             ->whereRaw('MONTH(created_at) = ?', [$cur_month])
             ->count();
-
         $reg_pat = DB::table("patients")
             ->whereRaw('MONTH(created_at) = ?', [$cur_month])
             ->count();
-
         $total_presc = DB::table("prescriptions")
             ->whereRaw('MONTH(created_at) = ?', [$cur_month])
             ->count();
-
         $total_med = DB::table("medicine_logs")
             ->whereRaw('MONTH(created_at) = ?', [$cur_month])
             ->count();
-
         $total_dis = DB::table("disease_logs")
             ->whereRaw('MONTH(created_at) = ?', [$cur_month])
             ->count();
-
         /*
         return view('pages.admin_report',
         ['most_visited_doc' => $most_visited_doc],
         ['most_given_med' => $most_given_med],
         ['most_recom_doc' => $most_recom_doc]);
         */
-
         return view(
             'pages.admin_report',
             compact(
@@ -174,15 +146,12 @@ class AdminController extends Controller
             )
         );
     }
-
     /** admin post **/
-
     public function getAllPosts()
     {
         $posts = admin_post::all();
         return $posts;
     }
-
     public function admin_post()
     {
         $posts = $this->getAllPosts();
@@ -191,7 +160,6 @@ class AdminController extends Controller
             compact('posts')
         );
     }
-
     public function createPost(Request $request)
     {
         if (!empty($request->image)) {
@@ -199,7 +167,6 @@ class AdminController extends Controller
             $imageName = $fname . '.' . request()->image->getClientOriginalExtension();
             $request->image->storeAs('post_images', $imageName);
         }
-
         admin_post::create([
             'image' => $imageName,
             'title' => $request['title'],
@@ -208,11 +175,9 @@ class AdminController extends Controller
             'point3' => $request['point3'],
             'point4' => $request['point4']
         ]);
-
         return redirect()->back()
             ->with('success', 'Your post is created successfully.');
     }
-
     public function removePost($post_id)
     {
         DB::table('admin_posts')->where('id', '=', $post_id)->delete();

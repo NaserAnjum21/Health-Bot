@@ -75,14 +75,14 @@
                         onclick = "SearchDoctors('Urologist')" />
                      <area shape="poly" 
                         coords = "385,246,382,264,380,285,380,298,380,313,381,329,377,341,377,359,381,379,384,389,384,403,381,416,376,437,370,445,377,450,389,452,394,449,398,440,400,422,396,403,396,400,398,385,398,373,404,363,405,338,404,327,404,314,412,291,413,280,418,265,420,253,422,248,426,248,430,255,431,272,435,289,438,296,440,305,442,321,445,329,446,344,446,356,449,369,453,392,452,405,453,422,453,440,457,452,470,452,481,449,472,420,466,392,468,375,473,363,474,345,471,333,470,327,469,316,472,302,472,288,472,273,470,256,465,250,466,243,382,243,385,241,460,248,458,252,453,252"
-                        href = "https://www.google.com" alt = "Perl Tutorial" title=""
+                        href = "#" alt = "Perl Tutorial" title=""
                         target = "_self" 
                         onMouseOver = "ShowDoctors('')" 
                         onMouseOut = "ShowDoctors('')"/>
                      <area shape="poly" 
                         coords = "384,137,374,148,369,159,362,172,355,185,342,199,330,208,327,224,325,237,320,250,310,257,309,242,316,221,319,208,327,193,333,177,343,161,349,151,358,133,362,125,365,117,373,107,378,103
                         ,465,126,474,144,477,154,487,170,501,189,518,205,523,222,526,241,532,248,539,256,542,243,538,224,531,208,523,190,513,168,506,156,491,130,481,114,474,104,470,99,463,97"
-                        href = "https://www.google.com" alt = "Perl Tutorial" title=""
+                        href = "#" alt = "Perl Tutorial" title=""
                         target = "_self" 
                         onMouseOver = "ShowDoctors('')" 
                         onMouseOut = "ShowDoctors('')"/>
@@ -120,7 +120,14 @@
                      onMouseOver = "ShowDoctors('Cardiologist')"
                      onMouseOut = "ShowDoctors('')"
                      onclick = "SearchDoctors('Cardiologist')">
-                     Have chest pain or discomfort?
+                     Have chest pain or discomfort and shortness of breath?
+                  </a>
+
+                  <a href="#" class="list-group-item list-group-item-action"
+                     onMouseOver = "ShowDoctors('Gastrologist')"
+                     onMouseOut = "ShowDoctors('')"
+                     onclick = "SearchDoctors('Gastrologist')">
+                     Have abdominal pain, stomach upset or loss of appetite?
                   </a>
                </div>
 					</div>
