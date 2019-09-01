@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,14 +17,72 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <style>
+        body {
+            background: url(/img/home.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+        .hel-font {
+            padding-top: px;
+            padding-right: 0px;
+            padding-left: 0px;
+            line-height: 0;
+            font-weight: normal;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 22px;
+            color: #DAA520;
+        }
+
+        .bot-font {
+            padding-top: px;
+            padding-right: 50px;
+            padding-left: 0px;
+            line-height: 0.8;
+            font-weight: normal;
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 22px;
+            color: #C0C0C0;
+        }
+
+        .button {
+            border: none;
+            background-color: #51909F;
+            color: white;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 400;
+            display: inline-block;
+            font-size: 16px;
+            margin: 0px 2px;
+            padding: 4px 32px;
+            -webkit-transition-duration: 0.4s;
+            /* Safari */
+            transition-duration: 0.4s;
+            cursor: pointer;
+        }
+
+        .button:hover {
+            border: 1px solid white;
+        }
+    </style>
 </head>
+
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
+        <nav style="background-color:#333;" class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    HealthBot
+                <a class="hel-font" href="{{ url('/') }}">
+                    Health
                 </a>
+                <a class="bot-font" href="{{ url('/') }}">
+                    Bot
+                </a>
+
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -37,46 +96,45 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->
-                            
+
                         @auth
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
+                        <li class="nav-item dropdown">
+                            <a style="color:white;" id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                {{ Auth::user()->name }} <span class="caret"></span>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
                                 </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
 
-                                
 
-                                    <a class="dropdown-item" href="">
-                                        {{ __('Profile') }}
-                                    </a>
-                                    
-                                
+                                <a class="dropdown-item" href="">
+                                    {{ __('Profile') }}
+                                </a>
 
-                                     <a class="dropdown-item" href="">
-                                        {{ __('Settings') }}
-                                    </a> 
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
+
+                                <a class="dropdown-item" href="">
+                                    {{ __('Settings') }}
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </div>
+                        </li>
                         @else
-                            <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                                @if (Route::has('register'))
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                    </li>
-                                @endif
+                        <li class="nav-item">
+                            <a style="color:white;" class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
+                        </li>
+                        @if (Route::has('register'))
+                        <li class="nav-item">
+                            <a style="color:white;" class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                        </li>
+                        @endif
                         @endauth
                     </ul>
                 </div>
@@ -88,4 +146,5 @@
         </main>
     </div>
 </body>
+
 </html>

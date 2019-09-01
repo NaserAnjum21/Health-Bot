@@ -42,6 +42,14 @@
                 font-size: 22px;
                 color: #C0C0C0;
             }
+            .hel-font:hover{
+                text-decoration: none;
+                color: #C0C0C0;
+            }
+            .bot-font:hover{
+                text-decoration: none;
+                color: #DAA520;
+            }
             #sidebar {
                 position: fixed;
                 top: 45px; /* add height + padding of header */

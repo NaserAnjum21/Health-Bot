@@ -1,4 +1,3 @@
-  
 @extends('layouts.auth')
 
 <title>
@@ -17,6 +16,7 @@
         position: relative;
         width: 20em;
     }
+
     .clock.simple:after {
         background: #000;
         border-radius: 50%;
@@ -29,6 +29,7 @@
         height: 5%;
         z-index: 10;
     }
+
     .minutes-container,
     .hours-container,
     .seconds-container {
@@ -38,6 +39,7 @@
         bottom: 0;
         left: 0;
     }
+
     .hours {
         background: #000;
         height: 20%;
@@ -47,6 +49,7 @@
         transform-origin: 50% 100%;
         width: 2.5%;
     }
+
     .minutes {
         background: #000;
         height: 40%;
@@ -56,6 +59,7 @@
         transform-origin: 50% 100%;
         width: 2%;
     }
+
     .seconds {
         background: #000;
         height: 45%;
@@ -66,33 +70,42 @@
         width: 1%;
         z-index: 8;
     }
+
     @keyframes rotate {
         100% {
             transform: rotateZ(360deg);
         }
     }
+
     .hours-container {
         animation: rotate 43200s infinite linear;
     }
+
     .minutes-container {
         animation: rotate 3600s infinite linear;
     }
+
     .seconds-container {
         animation: rotate 60s infinite linear;
     }
+
     .minutes-container {
         animation: rotate 3600s infinite steps(60);
     }
+
     .seconds-container {
         animation: rotate 60s infinite steps(60);
     }
+
     i:hover {
         box-shadow: 0 12px 16px 0 rgba(0, 0, 0, 0.24), 0 17px 50px 0 #606060;
     }
+
     #myProgress {
         width: 100%;
         background-color: #ddd;
     }
+
     #myBar {
         width: 10%;
         height: 30px;
@@ -103,16 +116,102 @@
     }
 
     body {
-        background:  url(img/med3.png) no-repeat center center fixed;
+        background: url(img/bg11.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-        
     }
-
-    
 </style>
+
+@section('content')
+
+<div class="bg-image">
+    <div class="container" style="padding: 2px;">
+        <div class="row justify-content-center">
+            <div class="col-md-3" style="margin: 120px 20px;">
+
+                @{{ initLocalClocks() }}
+
+                <article class="clock">
+                    <div class="hours-container">
+                        <div class="hours"></div>
+                    </div>
+                    <div class="minutes-container">
+                        <div class="minutes"></div>
+                    </div>
+                    <div class="seconds-container">
+                        <div class="seconds"></div>
+                    </div>
+                </article>
+
+            </div>
+
+            <div class="col-md-7" style="padding: 0px 40px; color: white;">
+
+                <!--
+              <div id="myProgress">
+                  <div id="myBar">0%</div>
+              </div>
+              -->
+
+                <div style="padding: 20px; line-height:80%;">
+
+                    <div class="card" style="margin: 20px; background-color: rgb(0,0,0); background-color: rgba(0,0,0, 0.4);">
+                        <div class="card-body" style="padding: 0px;">
+                            <div class="row">
+                                <div class="col-sm-6" style="padding:0px 15px;">
+                                    <img src="img/morning3.jpg" style="width:16rem; height:9rem;" class="card-img-top" alt="...">
+                                </div>
+                                <div class="col-sm-6" style="padding: 20px 20px;">
+                                    <div style="font-size:20px; color: #B6C2C9; padding: 0px 50px 20px 20px;">Morning</div>
+                                    <i class="fa fa-check-square" style="font-size:28px;color:black" onclick="move()"></i>
+                                    <a style="font-size:16px;">Taken Fexo?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin: 20px; background-color: rgb(0,0,0); background-color: rgba(0,0,0, 0.4);">
+                        <div class="card-body" style="padding: 0px;">
+                            <div class="row">
+                                <div class="col-sm-6" style="padding:0px 15px;">
+                                    <img src="img/noon2.jpg" style="width:16rem; height:9rem;" class="card-img-top" alt="...">
+                                </div>
+                                <div class="col-sm-6" style="padding: 20px 20px;">
+                                    <div style="font-size:20px; color: #B6C2C9; padding: 0px 50px 20px 20px;">Noon</div>
+                                    <a style="font-size:16px; color: #7A8A92; padding: 20px;">Nothing to take</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card" style="margin: 20px; background-color: rgb(0,0,0); background-color: rgba(0,0,0, 0.4);">
+                        <div class="card-body" style="padding: 0px;">
+                            <div class="row">
+                                <div class="col-sm-6" style="padding:0px 15px;">
+                                    <img src="img/evening.jpg" style="width:16rem; height:9rem;" class="card-img-top" alt="...">
+                                </div>
+                                <div class="col-sm-6" style="padding: 25px 20px;">
+                                    <div style="font-size:20px; color: #B6C2C9; padding: 0px 50px 20px 20px;">Evening</div>
+                                    <i class="fa fa-check-square" style="font-size:28px;color:black" onclick="move()"></i>
+                                    <a style="font-size:16px;">Taken Fexo?</a>
+                                    <br>
+                                    <i class="fa fa-check-square" style="font-size:28px;color:black" onclick="move()"></i>
+                                    <a style="font-size:16px;">Taken Napa?</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
 
 <script>
     function initLocalClocks() {
@@ -153,6 +252,7 @@
         var elem = document.getElementById("myBar");
         var width = 0;
         var id = setInterval(frame, 10);
+
         function frame() {
             if (width >= 33) {
                 clearInterval(id);
@@ -165,95 +265,4 @@
     }
     // background-color:#96CACE;
 </script>
-
-@section('content')
-
-<div class="bg-image">
-    <div class="container" style="padding: 2px;">
-        <div class="row justify-content-center">
-            <div class="col-md-3" style="margin: 20px;">
-
-                @{{ initLocalClocks() }}
-
-                <article class="clock">
-                    <div class="hours-container">
-                        <div class="hours"></div>
-                    </div>
-                    <div class="minutes-container">
-                        <div class="minutes"></div>
-                    </div>
-                    <div class="seconds-container">
-                        <div class="seconds"></div>
-                    </div>
-                </article>
-
-            </div>
-
-            <div class="col-md-7" style="padding: 0px 30px;">
-
-                <!--
-                <div id="myProgress">
-                    <div id="myBar">0%</div>
-                </div>
-                -->
-
-                <div style="padding: 20px; line-height:80%;">
-
-                    <div class="card" style="margin: 20px; background-color:#FFFFCC;">
-                        <div class="card-header"> Morning </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6" style="padding:0px 0px;">
-                                    <img src="img/morning3.jpg" style="width:16rem; height:8rem;" class="card-img-top" alt="...">
-                                </div>
-                                <div class="col-sm-6" style="padding: 30px 20px;">
-                                    <i class="fa fa-check-square" style="font-size:28px;color:green" onclick="move()"></i>
-                                    <a style="font-size:20px;">Taken Fexo?</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card" style="margin: 20px; background-color:#FFCC99;">
-                        <div class="card-header"> Noon </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6" style="padding:0px 0px;">
-                                    <img src="img/noon2.jpg" style="width:16rem; height:8rem;" class="card-img-top" alt="...">
-                                </div>
-                                <div class="col-sm-6" style="padding: 30px 20px;">
-                                    <i class="fa fa-check-square" style="font-size:28px;color:green" onclick="move()"></i>
-                                    <a style="font-size:20px;">Nothing to take</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card" style="margin: 20px; background-color:#FFCCFF;">
-                        <div class="card-header"> Night </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-sm-6" style="padding:0px 0px;">
-                                    <img src="img/evening.jpg" style="width:16rem; height:8rem;" class="card-img-top" alt="...">
-                                </div>
-                                <div class="col-sm-6" style="padding: 30px 20px;">
-                                    <i class="fa fa-check-square" style="font-size:28px;color:green" onclick="move()"></i>
-                                    <a style="font-size:20px;">Taken Fexo?</a>
-                                    <br>
-                                    <i class="fa fa-check-square" style="font-size:28px;color:green" onclick="move()"></i>
-                                    <a style="font-size:20px;">Taken Napa?</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-</div>
 @endsection
-
