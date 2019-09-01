@@ -145,7 +145,7 @@
                 <div class="card-body" style="padding: 10px;">
                     <div class="inset">
                         @if(count($appointments)==0)
-                        <a>You have no appointmnet currently</a>
+                        <a>You have no appointment currently</a>
                         <div class="links">
                             <a href="/select_doctor">Want to get an Appointment?</a>
                         </div>
