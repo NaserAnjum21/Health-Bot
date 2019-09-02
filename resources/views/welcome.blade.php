@@ -25,14 +25,12 @@
         height: 100vh;
         margin: 0;
     }
-
     .icon {
         background: url(img/logo.png);
         height: 20px;
         width: 20px;
         display: block;
     }
-
     .button {
         border: none;
         background-color: transparent;
@@ -49,20 +47,16 @@
         cursor: pointer;
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
-
     .button1 {
         padding: 4px 32px;
     }
-
     .button2 {
         padding: 4px 41px;
     }
-
     .button:hover {
         background-color: #51909F;
         color: white;
     }
-
     .links>a {
         color: #800000;
         padding: 0 25px;
@@ -71,7 +65,6 @@
         letter-spacing: .1rem;
         text-decoration: none;
     }
-
     .dropdown {
         position: relative;
         display: inline-block;
@@ -82,7 +75,6 @@
         letter-spacing: .1rem;
         text-decoration: none;
     }
-
     .dropdown-content {
         display: none;
         position: absolute;
@@ -93,7 +85,6 @@
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         z-index: 1;
     }
-
     .dropdown-content a {
         padding: 6px 16px;
         text-decoration: none;
@@ -105,17 +96,14 @@
         letter-spacing: .05rem;
         text-decoration: none;
     }
-
     .dropdown-content a:hover {
         background-color: #51909F;
         color: white;
         font-weight: 400;
     }
-
     .dropdown:hover .dropdown-content {
         display: block;
     }
-
     .dropdown:hover .dropbtn {
         background-color: #808080;
     }

@@ -15,7 +15,6 @@
         -o-background-size: cover;
         background-size: cover;
     }
-
     .links>a {
         color: white;
         padding: 0 25px;
@@ -24,39 +23,31 @@
         letter-spacing: .05rem;
         text-decoration: none;
     }
-
     .links>a:hover {
         text-decoration: none;
         color: #B6C2C9;
     }
-
     .column {
         float: left;
     }
-
     .left {
         width: 60%;
     }
-
     .right {
         width: 30%;
         margin: 100px 50px;
     }
-
     .mySlides {
         display: none;
     }
-
     .card2 {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transition: 0.3s;
         width: 100%;
     }
-
     .card2:hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
-
     .cont {
         color: white;
         padding: 20px 20px;
@@ -186,7 +177,6 @@
 <script>
     var myIndex = 0;
     carousel();
-
     function carousel() {
         var i;
         var x = document.getElementsByClassName("mySlides");

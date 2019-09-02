@@ -10,22 +10,18 @@
 	.fa {
 		font-size: 25px;
 	}
-
 	.fa-star {
 		
 	}
-
 	.checked {
 		color: goldenrod;
 	}
-
 	body {
         background: url(img/bg11.jpg) no-repeat center center fixed;
         -webkit-background-size: cover;
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-
     }
 	
 	.button {
@@ -44,25 +40,20 @@
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 		padding: 4px 32px;
     }
-
 	.btn1{
         font-size: 18px;
 	}
-
 	.btn2{
 		font-size: 16px;
 	}
-
     .button:hover {
         background-color: grey;
 		text-decoration: none;
         color: black;
     }
-
 	.modal{
 		color: grey;
 	}
-
 	.modal-header{
 		background-color: black;
 		color: white;

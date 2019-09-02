@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Auth;
 use Illuminate\Http\Request;
 use App\patient;
@@ -12,7 +10,6 @@ use App\appointment;
 use App\doctor;
 use Carbon\Carbon;
 use DB;
-
 class PatientController extends Controller
 {
     /**
@@ -24,11 +21,9 @@ class PatientController extends Controller
     {
         //
         $patients = patient::latest()->paginate(10);
-
         return view('patients.index', compact('patients'))
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -39,7 +34,6 @@ class PatientController extends Controller
         //
         return view('patients.create');
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -53,60 +47,47 @@ class PatientController extends Controller
             'name' => 'required',
             'email' => 'required',
         ]);
-
         patient::create($request->all());
-
         return redirect()->route('patients.index')
             ->with('success', 'Patient Registered successfully.');
     }
-
     public function update(Request $request)
     {
         $pat_id = Auth::guard('patient')->id();
         $patient = patient::find($pat_id);
-
         if ($patient) {
             if (!empty($request->name)) {
                 $patient->name = $request->name;
             }
-
             if (!empty($request->email)) {
                 $patient->email = $request->email;
             }
-
             if (!empty($request->phone)) {
                 $patient->contact_no = $request->phone;
             }
-
             if (!empty($request->address)) {
                 $patient->address = $request->address;
             }
-
             if (!empty($request->height)) {
                 $patient->height = $request->height;
             }
-
             if (!empty($request->weight)) {
                 $patient->weight = $request->weight;
             }
-
             if (!empty($request->bloodgroup)) {
                 $patient->bloodgroup = $request->bloodgroup;
             }
-
             if (!empty($request->file)) {
                 $fname = "pp_" . time();
                 $filename = $fname . '.' . request()->file->getClientOriginalExtension();
                 $patient->profile_pic = $filename;
                 $request->file->storeAs('patients', $filename);
             }
-
             $patient->save();
         }
         return redirect()->back()
             ->with('success', 'You have successfully updated your profile.');
     }
-
     /**
      * Display the specified resource.
      *
@@ -117,7 +98,6 @@ class PatientController extends Controller
     {
         return view('patients.show', compact('patient'));
     }
-
     /**
      * Show the form for editing the specified resource.
      *
@@ -128,7 +108,6 @@ class PatientController extends Controller
     {
         return view('patients.edit', compact('patient'));
     }
-
     /**
      * Update the specified resource in storage.
      *
@@ -136,7 +115,6 @@ class PatientController extends Controller
      * @param  \App\patient  $patient
      * @return \Illuminate\Http\Response
      */
-
     /**
      * Remove the specified resource from storage.
      *
@@ -146,17 +124,14 @@ class PatientController extends Controller
     public function destroy(patient $patient)
     {
         $patient->delete();
-
         return redirect()->route('patients.index')
             ->with('success', 'Patient deleted successfully');
     }
-
     public function my_health($patient_id)
     {
         $appointment = DB::table('appointments')
             ->where('patient_id', '=', [$patient_id])
             ->get();
-
         $count = 0;
         $appointments = [];
         foreach ($appointment as $app) {
@@ -171,53 +146,39 @@ class PatientController extends Controller
                 } else {
                     $app_hour = 'am';
                 }
-
                 $doctor = DB::table('doctors')
                     ->where('id', '=', [$app->doctor_id])
                     ->get();
-
                 foreach ($doctor as $doc) {
                     $appointments[$count] = [$doc->name, $app_time, $app_hour, $app_date];
                     $count = $count + 1;
                 }
             }
         }
-
-
-
         $infos = DB::table('patients')
             ->where('id', '=', [$patient_id])
             ->get();
-
-
-
         $prescription_id = DB::table('prescriptions')
             ->select('id')
             ->where('patient_id', '=', [$patient_id])
             ->get();
-
         $pres_id = json_decode(json_encode($prescription_id), true);
-
         $medicines = DB::table('medicine_logs')
             ->whereIn('prescription_id', $pres_id)
             ->get();
-
         $morning_med = [];
         $noon_med = [];
         $evening_med = [];
-
         $count = 1;
         foreach ($medicines as $medicine) {
             $start = Carbon::parse($medicine->created_at);
             $now = Carbon::now();
             $elapsed_time = $now->diffInDays($start);
-
             if ($elapsed_time <= $medicine->course_duration) {
                 $med_name = DB::table('medicines')
                     ->where('id', '=', [$medicine->medicine_id])
                     ->get();
                 $due_time = $medicine->course_duration - $elapsed_time;
-
                 $m_dose = substr($medicine->dose, -3, 1);
                 if ($m_dose != '0') {
                     foreach ($med_name as $m_name) {
@@ -225,7 +186,6 @@ class PatientController extends Controller
                         $morning_med[$count] = $mm;
                     }
                 }
-
                 $n_dose = substr($medicine->dose, -2, 1);
                 if ($n_dose != '0') {
                     foreach ($med_name as $m_name) {
@@ -233,7 +193,6 @@ class PatientController extends Controller
                         $noon_med[$count] = $nm;
                     }
                 }
-
                 $e_dose = substr($medicine->dose, -1, 1);
                 if ($e_dose != '0') {
                     foreach ($med_name as $m_name) {
@@ -244,7 +203,6 @@ class PatientController extends Controller
                 $count = $count + 1;
             }
         }
-
         $time = Carbon::now('Asia/Dhaka');
         $t_format = $time->format('h:i');
         $hour = $time->format('H');
@@ -253,7 +211,6 @@ class PatientController extends Controller
         } else {
             $h_format = 'am';
         }
-
         return view(
             'pages.my_health',
             compact(
