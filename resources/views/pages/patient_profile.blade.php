@@ -152,7 +152,7 @@
     <div class="row">
         <div class="col-md-4">
             <div class="profile-img">
-                <img src="storage/patients/{{ Auth::guard('patient')->user()->profile_pic }}" alt="{{ Auth::guard('patient')->user()->name }}" />
+                <img src="storage/patients/{{ Auth::guard('patient')->user()->profile_pic }}" alt="{{ Auth::guard('patient')->user()->name }}" style="width:12rem; height:12rem; object-fit: cover; padding:15px;" />
 
             </div>
         </div>

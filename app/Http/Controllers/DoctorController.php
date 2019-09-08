@@ -200,15 +200,17 @@ class DoctorController extends Controller
 
     public function doctorSearch()
     {
-        $q = Input::get ( 'q' );
-        $doctors = Doctor::where ( 'name', 'LIKE', '%' . $q . '%' )
-                        ->orWhere ( 'email', 'LIKE', '%' . $q . '%' )
-                        ->orWhere ( 'speciality', 'LIKE', '%' . $q . '%' )
-                        ->orWhere ( 'work_address', 'LIKE', '%' . $q . '%' )
+        $name= Input::get ( 'name' );
+        $spec = Input::get ( 'spec' );
+        $loc = Input::get ( 'loc' );
+        $doctors = Doctor::where ( 'name', 'LIKE', '%' . $name . '%' )
+                        ->where ( 'speciality', 'LIKE', '%' . $spec . '%' )
+                        ->where ( 'work_address', 'LIKE', '%' . $loc . '%' )
+                        ->where ('is_doctor', 'LIKE', '%' . '1' . '%')
                         ->orderByraw(' 6* rate_sum / rate_count - 4* (fee/100) DESC')
                         ->get ();
         if (count ( $doctors ) > 0)
-            return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withDetails ( $doctors )->withQuery ( $q );
+            return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withDetails ( $doctors )->withQuery ( $name )->withQuery ( $spec )->withQuery ( $loc );
         else
             return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withMessage ( 'No Details found. Try to search again !' );
     }

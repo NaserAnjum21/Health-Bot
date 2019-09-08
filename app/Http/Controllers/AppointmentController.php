@@ -7,6 +7,7 @@ use App\Doctor;
 use App\Patient;
 use Auth;
 use DB;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 use Notification;
@@ -46,6 +47,12 @@ class AppointmentController extends Controller
         $pat_id = Auth::guard('patient')->id();
 
         $combinedDT = date('Y-m-d H:i:s', strtotime("$request->date $request->time"));
+
+        $cur_time = Carbon::now();
+        if($cur_time> $combinedDT)
+        {
+            return redirect()->back()->with('error', 'You have given invalid datetime. Past time ');
+        }
 
         $patConflictApp = DB::table('appointments')
             ->where('time', $combinedDT)

@@ -15,58 +15,46 @@
         -moz-background-size: cover;
         -o-background-size: cover;
         background-size: cover;
-
     }
-
     .links>a {
         color: cornflowerblue;
         font-size: 14px;
         font-weight: 200;
         text-decoration: none;
     }
-
     .links>a:hover {
         text-decoration: none;
         color: #B6C2C9;
     }
-
     .column {
         float: left;
     }
-
     .left {
         width: 25%;
     }
-
     .middle {
         width: 50%
     }
-
     .right {
         width: 25%;
     }
-
     .mySlides {
         display: none;
     }
-
     .card2 {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
         transition: 0.3s;
         width: 100%;
     }
-
     .card2:hover {
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
     }
-
     .cont {
         color: white;
         padding: 20px 20px;
         background-color: rgb(0, 0, 0);
         background-color: rgba(0, 0, 0, 0.4);
     }
-
     .button {
         border: none;
         background-color: black;
@@ -83,34 +71,30 @@
         box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
         padding: 4px 32px;
     }
-
     .btn1 {
         font-size: 18px;
     }
-
     .btn2 {
         font-size: 16px;
     }
-
     .button:hover {
         background-color: grey;
         text-decoration: none;
         color: black;
     }
-
     div.inset {
         outline-width: 2px;
         outline-color: #202020;
         outline-style: inset;
         padding: 10px;
     }
-
     div.inset2 {
         outline-width: 2px;
         outline-color: transparent;
         color: khaki;
         outline-style: inset;
         padding: 10px;
+        font-size: 18px;
     }
 </style>
 
@@ -135,9 +119,15 @@
                     <a href="/select_doctor">doctors</a>
                 </a>
                 if you have these symptoms.
-                <img src="/img/dengue_symp.jpg" style="width:18rem; height:30rem;" class="card-img-top" alt="...">
+                <img src="/img/symp.jpeg" style="width:18rem; height:12rem;" class="card-img-top" alt="...">
             </div>
             <br>
+            <div class="inset2">
+                Check your blood pressure monthly!
+                <img src="/img/check_bp.jpg" style="width:18rem; height:12rem;" class="card-img-top" alt="...">
+            </div>
+            <br>
+
         </div>
 
         <div class="column middle" style="padding: 20px;">
@@ -259,27 +249,23 @@
                         <?php
                         $bmi = 0;
                         if ($info->weight != 0 && $info->height != 0) {
-                            $bmi = $info->weight / ( ($info->height/100) * ($info->height/100) );
+                            $bmi = $info->weight / (($info->height / 100) * ($info->height / 100));
                             $bmi = round($bmi, 1);
                             echo "<a>$bmi</a>";
                             echo '<a style="color:cornflowerblue; float:right">Normal range : 18.5 - 24.9 </a><br>';
-
-                            if ($bmi < 18.5) {
+                            if ($bmi <= 18.5) {
                                 echo 'You are in the <a style="color: yellowgreen;">Underweight </a>
                                 <i class="fas fa-frown" style="font-size:18px; color:#FFFF66;"></i>
                                 range';
-                            } 
-                            else if ($bmi > 18.5 && $bmi < 24.9) { 
+                            } else if ($bmi > 18.5 && $bmi <= 24.9) {
                                 echo 'You are in the <a style="color: yellowgreen;">Healthy </a>
                                 <i class="fas fa-grin" style="font-size:18px; color:#FFFF66;"></i>
                                 range';
-                            } 
-                            else if ($bmi > 25 && $bmi < 29.9) { 
+                            } else if ($bmi > 25 && $bmi <= 29.9) {
                                 echo 'You are in the <a style="color: yellowgreen;">Overweight </a>
                                 <i class="fas fa-frown" style="font-size:18px; color:#FFFF66;"></i>
                                 range';
-                            } 
-                            else { 
+                            } else {
                                 echo 'You are in the <a style="color: yellowgreen;">Obese </a>
                                 <i class="fas fa-tired" style="font-size:18px; color:#FFFF66;"></i>
                                 range';
@@ -317,13 +303,41 @@
         <div class="column right">
 
             <div class="inset2">
-                Are you taking some vegetables everyday?
-                <img src="/img/salad.jpg" style="width:17rem; height:11rem;" class="card-img-top" alt="...">
+                <div class="mySlides w3-animate-right">
+                    <a style="font-size:18px;">Are you taking some vegetables everyday?</a>
+                    <img src="/img/salad.jpg" style="width:17rem; height:11rem;" class="card-img-top" alt="...">
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Tomato prevents cancer</a> <br>
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Broccoli is a good source of vitamins and calcium</a> <br>
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Avocados keeps yor skin younger!</a> <br>
+                </div>
+                <div class="mySlides w3-animate-right">
+                    <a style="font-size:18px;">Do you take enough protein regularly?</a>
+                    <img src="/img/protein.jpg" style="width:17rem; height:11rem;" class="card-img-top" alt="...">
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Eggs</a> <br>
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Milk</a> <br>
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Fish</a> <br>
+                </div>
+                <div class="mySlides w3-animate-right">
+                    <a style="font-size:18px;">Keep fibre enriched food in your everyday menue.</a>
+                    <img src="/img/fibre.jpg" style="width:17rem; height:11rem;" class="card-img-top" alt="...">
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Darker colored vegetables</a> <br>
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Beans</a> <br>
+                    <i class="fa fa-arrow-circle-right" style="font-size:16px; color:aquamarine;"></i>
+                    <a style="font-size:16px; color:#FFCCE5;">Nuts</a> <br>
+                </div>
             </div>
             <br>
 
             <div class="inset2">
-                We think, jogging 20 minutes a day might be helpful for you!
+                <a style="font-size:18px;">We think, jogging 20 minutes a day might be helpful for you!</a>
                 <img src="/img/jogging.jpg" style="width:17rem; height:11rem;" class="card-img-top" alt="...">
             </div>
             <br>
@@ -336,7 +350,6 @@
 <script>
     var myIndex = 0;
     carousel();
-
     function carousel() {
         var i;
         var x = document.getElementsByClassName("mySlides");

@@ -85,17 +85,43 @@
 			<div class="panel-heading"></div>
 			<div class="panel-body">
 
-				<a href="bodymap" class="button btn2" style="margin:0px 20px;">Don't know any doctor? Tell us about your problem</a>
+				<a href="bodymap" class="button btn2" style="text-align:center; margin:0px 20px; ">Don't know any doctor? Tell us about your problem</a>
 
 				<form action="doctorSearch" method="POST" role="search">
 					{{ csrf_field() }}
-					<div class="input-group" style="margin: 20px; width:97%;">
-						<input type="text" class="form-control" name="q" placeholder="Search doctors by name,speciality,address etc.."> <span class="input-group-btn">
-							<button type="submit" class="button btn2">
-								Search
-							</button>
-						</span>
+					<div class="row">
+						<div class="form-group col-md-3" style="margin: 20px;">
+							<span class="text" style="color: white;">Name:</span>
+							<input type="text" class="form-control" name="name" placeholder="Search by name"> <span class="input-group-btn">
+								
+							</span>
+						</div>
+
+						<div class="form-group col-md-3" style="margin: 20px;">
+							<span class="text" style="color: white;">Speciality:</span>
+							<input type="text" class="form-control" name="spec" placeholder="Search by speciality"> <span class="input-group-btn">
+								
+							</span>
+						</div>
+
+						<div class="form-group col-md-3" style="margin: 20px;">
+							<span class="text" style="color: white;">Location:</span>
+							<input type="text" class="form-control" name="loc" placeholder="Search by location"> <span class="input-group-btn">
+								
+							</span>
+						</div>
+
+						<div class="form-group col-md-1" style="margin: 20px;">
+							<span class="text" style="color: black;"> . </span>
+							 <span class="input-group-btn">
+								<button type="submit" class="button btn2">
+									Search
+								</button>
+							</span>
+						</div>
+
 					</div>
+
 
 				</form>
 
