@@ -76,6 +76,11 @@
                 <th width="280px">Action</th>
             </tr>
             @foreach ($doctors as $doctor)
+                @auth('doctor')
+                    @if ($doctor->id == Auth::guard('doctor')->user()->id)
+                        @continue
+                    @endif
+                @endauth
             <tr>
                 <td>{{ $doctor->name }}</td>
 
@@ -83,16 +88,31 @@
 
                 @if ($doctor->is_doctor==1)
                 <td>Approved</td>
-                @else
+                @elseif ($doctor->is_doctor==0)
                 <td>Pending</td>
+                @else
+                <td>Referred</td>
                 @endif
 
                 <td>
                     <form action="{{ route('doctors.destroy',$doctor->id) }}" method="POST">
 
+                        @auth('doctor')
+                            @if ($doctor->is_doctor==1)
+                                <a class="button button4" href="#">Refer</a>
+                            @else
+                                <a class="button button4" href="refer/{{ $doctor->id }}">Refer</a>
+                            @endif
+                         
+                        @endauth
+
+                        @auth
+
                         <a class="button button4" href="approve/{{ $doctor->id }}">Approve</a>
 
                         <a class="button button2" href="disapprove/{{ $doctor->id }}">Cancel</a>
+
+                        @endauth
 
                         <button type="button" class="button button3" data-toggle="modal" data-target="#infoModal{{ $doctor->id }}">Doctor Info</button>
 
@@ -165,6 +185,13 @@
                                                     <div class="form-group">
                                                         <strong>Visiting Fee:</strong>
                                                         <input type="text" name="fee" class="form-control" placeholder="{{$doctor->fee}}" readonly>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-xs-12 col-sm-12 col-md-12">
+                                                    <div class="form-group">
+                                                        <strong>License No:</strong>
+                                                        <input type="text" name="license_no" class="form-control" placeholder="{{$doctor->license_no}}" readonly>
                                                     </div>
                                                 </div>
 

@@ -3,11 +3,11 @@
 <script type = "text/javascript">
          
     function ShowDoctors(name) {
-        document.myform.q.value = name
+        document.myform.spec.value = name
     }
 
     function SearchDoctors(name) {
-        document.myform.q.value = name
+        document.myform.spec.value = name
         document.myform.submit();
     }
     
@@ -20,7 +20,7 @@
         <form action="doctorSearch" name = "myform" method="POST" role="search">
             {{ csrf_field() }}
             <div class="input-group">
-                <input type="text" class="form-control" name="q"
+                <input type="text" class="form-control" name="spec"
                     placeholder="Doctor's speciality"> <span class="input-group-btn">
                     
                 </span>

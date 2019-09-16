@@ -11,12 +11,17 @@ use App\patient;
 use App\prescription;
 use Illuminate\Http\Request;
 
+/**
+ * @group Prescription Management
+ *
+ * APIs for handling prescription functionalities
+ */
+
 class PrescriptionController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of the Prescriptions.
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -27,21 +32,18 @@ class PrescriptionController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    
     public function create()
     {
         return view('prescriptions.create');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create and store an prescription
+     * 
+     * This also stores values to Medicine and Disease Log table
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @bodyParam app_id int the ID of the corresponding appointment 
      */
     public function store(Request $request, $app_id)
     {
@@ -114,6 +116,11 @@ class PrescriptionController extends Controller
 
     }
 
+    /**
+     * Show a presctiption form to doctor
+     *
+     */
+
     public function show_prescription_form($app_id)
     {
         $app = appointment::find($app_id);
@@ -122,6 +129,11 @@ class PrescriptionController extends Controller
         return view('pages.give_prescription', ['app' => $app], ['patient' => $patient]);
 
     }
+
+    /**
+     * Show Prescription Details
+     *
+     */
 
     public function show_prescription($presc_id)
     {
@@ -141,47 +153,25 @@ class PrescriptionController extends Controller
 
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\prescription  $prescription
-     * @return \Illuminate\Http\Response
-     */
+    
     public function show(prescription $prescription)
     {
         //
         return view('prescriptions.show', compact('prescription'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\prescription  $prescription
-     * @return \Illuminate\Http\Response
-     */
+    
     public function edit(prescription $prescription)
     {
         return view('prescriptions.edit', compact('prescription'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\prescription  $prescription
-     * @return \Illuminate\Http\Response
-     */
+    
     public function update(Request $request, prescription $prescription)
     {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\prescription  $prescription
-     * @return \Illuminate\Http\Response
-     */
     public function destroy(prescription $prescription)
     {
         //

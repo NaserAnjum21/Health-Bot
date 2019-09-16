@@ -9,9 +9,16 @@ use App\prescription;
 use App\Doctor;
 use App\admin_post;
 use DB;
+
+/**
+ * @group Admin Functionalities
+ *
+ * APIs for managing admin side
+ */
+
 class AdminController extends Controller
 {
-    //
+    
     public function getMostGivenMedicine()
     {
         $meds = DB::table("medicines")
@@ -82,6 +89,12 @@ class AdminController extends Controller
             compact('total_app', 'finished_app')
         );
     }
+
+    /**
+     * Get all the statistics for the admin
+     *
+     */
+
     public function admin_report()
     {
         $most_visited_doc = $this->getMostAppointedDoctors();
@@ -152,6 +165,12 @@ class AdminController extends Controller
         $posts = admin_post::all();
         return $posts;
     }
+
+    /**
+     * Show Posts page for admin
+     *
+     */
+
     public function admin_post()
     {
         $posts = $this->getAllPosts();
@@ -160,6 +179,12 @@ class AdminController extends Controller
             compact('posts')
         );
     }
+
+    /**
+     * Create a post
+     *
+     */
+
     public function createPost(Request $request)
     {
         if (!empty($request->image)) {
@@ -178,6 +203,12 @@ class AdminController extends Controller
         return redirect()->back()
             ->with('success', 'Your post is created successfully.');
     }
+
+    /**
+     * Remove posts
+     *
+     */
+
     public function removePost($post_id)
     {
         DB::table('admin_posts')->where('id', '=', $post_id)->delete();

@@ -55,97 +55,12 @@ Route::get('docProfile', function () {
     return view('pages.doctor_profile');
 });
 
-Route::get('search_doctor', function () {
-    $doctors = DB::table('doctors')->where([
-        ['is_doctor', '=', '1'],
-    ])->get();
-    return view('pages.search_doctor', ['doctors' => $doctors]);
-});
-
-Route::get('select_doctor', function () {
-    
-    $doctors = DB::table('doctors')->where([
-        ['is_doctor', '=', '1'],
-    ])->orderByraw(' 6* rate_sum / rate_count - 4* (fee/100) DESC')->get();
-
-    return view('pages.select_doctor', ['doctors' => $doctors]);
-});
-
-Route::get('show_pat_appointments', function () {
-    $pat_id = Auth::guard('patient')->id();
-    $apps = DB::table('appointments')->where([
-        ['patient_id', '=', $pat_id],
-    ])->get();
-
-    foreach ($apps as $app) {
-        if ($app->time < now()) {
-            //$app->status= 'finished';
-
-            DB::table('appointments')
-                ->where('id', $app->id)
-                ->update(
-                    ['status' => 'finished']
-                );
-
-            //$app->save();
-        }
-
-    }
-
-    return view('pages.pat_appointment', ['apps' => $apps]);
-});
-
-Route::get('show_pat_prescriptions', function () {
-    $pat_id = Auth::guard('patient')->id();
-    $prescriptions = DB::table('prescriptions')->where([
-        ['patient_id', '=', $pat_id],
-    ])->get();
-
-    return view('pages.pat_prescription', ['prescriptions' => $prescriptions]);
-});
-
-Route::get('show_doc_prescriptions', function () {
-    $doc_id = Auth::guard('doctor')->id();
-    $prescriptions = DB::table('prescriptions')->where([
-        ['doctor_id', '=', $doc_id],
-    ])->get();
-
-    return view('pages.doc_prescription', ['prescriptions' => $prescriptions]);
-});
-
-
-Route::get('show_doc_appointments', function () {
-    $doc_id = Auth::guard('doctor')->id();
-    $apps = DB::table('appointments')->where([
-        ['doctor_id', '=', $doc_id],
-    ])->get();
-
-    $prescriptions = DB::table('prescriptions')->get();
-
-    foreach ($apps as $app) {
-        if ($app->time < now()) {
-            //$app->status= 'finished';
-
-            DB::table('appointments')
-                ->where('id', $app->id)
-                ->update(
-                    ['status' => 'finished']
-                );
-
-            //$app->save();
-        }
-
-    }
-
-    //$patients= DB::table('patients')->get();
-
-    return view('pages.doc_appointment', ['apps' => $apps],['prescriptions'=>$prescriptions]);
-});
-
 
 Route::get('admin', function () {
     return view('admin');
 });
+
+
 
 Route::resource('patients', 'PatientController');
 Route::resource('doctors', 'DoctorController');
@@ -153,11 +68,8 @@ Route::resource('prescriptions', 'PrescriptionController');
 Route::resource('medicines', 'MedicineController');
 Route::resource('appointments', 'AppointmentController');
 
-Route::get('my_health/{id}','PatientCOntroller@my_health');
-Route::get('show_pat_medicines/{id}','MedicineLogController@pat_medicine');
 
 Route::get('admin_report','AdminController@admin_report');
-
 /* admin_post */
 Route::get('admin_post','AdminController@admin_post');
 Route::post('createPost', 'AdminController@createPost');
@@ -169,19 +81,28 @@ Route::post('confirm/{id}', 'AppointmentController@confirm');
 Route::post('reschedule/{id}', 'AppointmentController@reschedule');
 Route::post('cancelFromPat/{id}', 'AppointmentController@cancelFromPatient');
 Route::post('cancelFromDoc/{id}', 'AppointmentController@cancelFromDoctor');
+Route::get('show_pat_appointments', 'AppointmentController@show_pat_appointments');
+Route::get('show_pat_prescriptions', 'AppointmentController@show_pat_prescriptions');
+Route::get('show_doc_appointments', 'AppointmentController@show_doc_appointments');
+Route::get('show_doc_prescriptions', 'AppointmentController@show_doc_prescriptions');
 
 Route::post('storePresc/{id}', 'PrescriptionController@store');
 Route::get('showPrescForm/{id}', 'PrescriptionController@show_prescription_form');
 Route::get('showPresc/{id}', 'PrescriptionController@show_prescription');
 
 Route::post('updatePat', 'PatientController@update');
+Route::get('my_health/{id}','PatientController@my_health');
 
-Route::post('updateDoc', 'DoctorController@update');
-Route::post('rate/{id}', 'DoctorController@rate');
+Route::get('select_doctor', 'DoctorController@select_doctor');
 Route::get('/approve/{id}', 'DoctorController@approve');
 Route::get('/disapprove/{id}', 'DoctorController@disapprove');
+Route::get('/refer/{id}', 'DoctorController@refer');
 Route::get('searchDoctor', 'DoctorController@searchDoctor')->name('doctor.search');
+Route::post('updateDoc', 'DoctorController@update');
+Route::post('rate/{id}', 'DoctorController@rate');
 Route::any('doctorSearch', 'DoctorController@doctorSearch')->name('doctor.search2');
+
+Route::get('show_pat_medicines/{id}','MedicineLogController@pat_medicine');
 
 Route::get('pickmedicine', 'MedicineController@autocomplete')->name('pickmedicine');
 Route::get('pickdisease', 'DiseaseController@autocomplete')->name('pickdisease');

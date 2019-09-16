@@ -5,73 +5,15 @@ namespace App\Http\Controllers;
 use App\Disease;
 use Illuminate\Http\Request;
 
+/**
+ * @group Disease Management
+ *
+ * APIs for managing diseases
+ */
+
 class DiseaseController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Disease  $disease
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Disease $disease)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Disease  $disease
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Disease $disease)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Disease  $disease
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Disease $disease)
-    {
-        //
-    }
-
+    
     public function autocomplete(Request $request)
     {
         $data = Disease::select("name")
@@ -81,14 +23,4 @@ class DiseaseController extends Controller
         return response()->json($data);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Disease  $disease
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Disease $disease)
-    {
-        //
-    }
 }

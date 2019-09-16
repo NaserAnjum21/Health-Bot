@@ -9,9 +9,21 @@ use App\medicine;
 use Carbon\Carbon;
 use DB;
 
+/**
+ * @group Medicine Functionalities
+ *
+ * APIs for managing medicine and medicine logs
+ */
 
 class MedicineLogController extends Controller
 {
+
+    /**
+     * Show medicine info of the patient
+     *
+     * @bodyParam patient_id int the ID of the patient
+     */
+
     public function pat_medicine($patient_id)
     {
         $prescription_id = DB::table('prescriptions')

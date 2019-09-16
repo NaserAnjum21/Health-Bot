@@ -78,6 +78,11 @@ class MedicineController extends Controller
         //
     }
 
+    /**
+     * Suggest medicine
+     *
+     */
+
     public function autocomplete(Request $request)
     {
         $data = medicine::select("name")

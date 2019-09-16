@@ -137,6 +137,7 @@
 								<?php
 								$rate_sum = $doctor->rate_sum;
 								$rate_count = $doctor->rate_count;
+								if($rate_count== 0.0001) $rate_count=0;
 								if ($rate_count == 0) $rating = 0;
 								else $rating = $rate_sum / $rate_count;
 								$rating = round($rating, 1);

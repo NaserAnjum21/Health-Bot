@@ -9,12 +9,17 @@ use App\Quotation;
 use App\Doctor;
 use Illuminate\Http\Request;
 
+/**
+ * @group Doctor Functionalities
+ *
+ * APIs for managing doctor related methods
+ */
+
 class DoctorController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a list of doctors
      *
-     * @return \Illuminate\Http\Response
      */
     public function index()
     {
@@ -25,15 +30,12 @@ class DoctorController extends Controller
             ->with('i', (request()->input('page', 1) - 1) * 10);
     }
 
+
+    
     /**
-     * Show the form for creating a new resource.
+     * Approve a doctor (by admin)
      *
-     * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        //
-    }
 
     public function approve(Request $request)
     {
@@ -48,6 +50,11 @@ class DoctorController extends Controller
         return redirect('/doctors');
     }
 
+
+    /**
+     * Disapprove a doctor (by admin)
+     *
+     */
     public function disapprove(Request $request)
     {
         //
@@ -60,6 +67,30 @@ class DoctorController extends Controller
 
         return redirect('/doctors');
     }
+
+    /**
+     * Refer a doctor (by other registered doctors)
+     *
+     */
+
+    public function refer(Request $request)
+    {
+        //
+
+        DB::table('doctors')
+        ->where('id', $request->id)
+        ->update(
+            ['is_doctor' => 2]
+        );
+
+        return redirect('/doctors');
+    }
+
+    /**
+     * Rating and giving feedback to doctor
+     *
+     * @bodyParam dr_id int the ID of the rated doctor
+     */
 
     public function rate(Request $request, $dr_id)
     {
@@ -82,38 +113,19 @@ class DoctorController extends Controller
 
         $doctor->save();
 
+        $pat_id = Auth::guard('patient')->id();
+
+        DB::table('feedbacks')->insert([
+            'patient_id' => $pat_id,
+            'doctor_id' => $dr_id,
+            'rating' => $req_rate,
+            'comments' => $request->feedback,
+        ]);
+
         return redirect()->back()->with('success','Rating and feedback given successfully');
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Doctor $doctor)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
-     */
     public function edit()
     {
         //
@@ -128,11 +140,8 @@ class DoctorController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update doctor profile
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
@@ -174,6 +183,10 @@ class DoctorController extends Controller
                 $doctor->fee= $request->fee;
             }
 
+            if (!empty($request->license_no)) {
+                $doctor->license_no= $request->license_no;
+            }
+
             if (!empty($request->file)) {
                 $fname = "pp_" . time();
                 $filename = $fname . '.' . request()->file->getClientOriginalExtension();
@@ -187,30 +200,81 @@ class DoctorController extends Controller
             ->with('success', 'You have successfully updated your profile.');
     }
 
+
     /**
-     * Remove the specified resource from storage.
+     * Show sorted doctor list to patient
      *
-     * @param  \App\Doctor  $doctor
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(Doctor $doctor)
+
+    public function select_doctor()
     {
-        //
+        $doctors = Doctor::where ('is_doctor', 'LIKE', '%' . '1' . '%') 
+                        ->get ();
+        if (count ( $doctors ) > 0)
+        {
+            $doctors = $doctors->sort(function ($a, $b) {
+                $a_app_count = DB::table('appointments')
+                                        ->where('doctor_id', $a->id)
+                                        ->count();
+                $a_score = 6* $a->rate_sum / $a->rate_count - 4* ( $a->fee/100) + 3* $a_app_count ;
+
+                $b_app_count = DB::table('appointments')
+                                        ->where('doctor_id', $b->id)
+                                        ->count();
+                $b_score = 6* $b->rate_sum / $b->rate_count - 4* ( $b->fee/100) + 3* $b_app_count ;
+
+
+                if ($a_score == $b_score) {
+                    return 0;
+                }
+                return ($a_score > $b_score) ? -1 : 1;
+            });
+        }
+        
+        return view('pages.select_doctor', ['doctors' => $doctors]);
     }
+
+
+    /**
+     * Search Doctors
+     * 
+     * Patient can search by name, location, speciality
+     * 
+     */
 
     public function doctorSearch()
     {
+        
         $name= Input::get ( 'name' );
         $spec = Input::get ( 'spec' );
         $loc = Input::get ( 'loc' );
         $doctors = Doctor::where ( 'name', 'LIKE', '%' . $name . '%' )
                         ->where ( 'speciality', 'LIKE', '%' . $spec . '%' )
                         ->where ( 'work_address', 'LIKE', '%' . $loc . '%' )
-                        ->where ('is_doctor', 'LIKE', '%' . '1' . '%')
-                        ->orderByraw(' 6* rate_sum / rate_count - 4* (fee/100) DESC')
+                        ->where ('is_doctor', 'LIKE', '%' . '1' . '%') //->orderByraw(' 6* rate_sum / rate_count - 4* (fee/100) DESC')
                         ->get ();
         if (count ( $doctors ) > 0)
+        {
+            $doctors = $doctors->sort(function ($a, $b) {
+                $a_app_count = DB::table('appointments')
+                                        ->where('doctor_id', $a->id)
+                                        ->count();
+                $a_score = 6* $a->rate_sum / $a->rate_count - 4* ( $a->fee/100) + 3* $a_app_count ;
+
+                $b_app_count = DB::table('appointments')
+                                        ->where('doctor_id', $b->id)
+                                        ->count();
+                $b_score = 6* $b->rate_sum / $b->rate_count - 4* ( $b->fee/100) + 3* $b_app_count ;
+
+
+                if ($a_score == $b_score) {
+                    return 0;
+                }
+                return ($a_score > $b_score) ? -1 : 1;
+            });
             return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withDetails ( $doctors )->withQuery ( $name )->withQuery ( $spec )->withQuery ( $loc );
+        }
+            
         else
             return view ( 'pages.select_doctor', ['doctors' => $doctors] )->withMessage ( 'No Details found. Try to search again !' );
     }

@@ -248,6 +248,13 @@
                                         </div>
                                     </div>
 
+                                    <div class="col-xs-12 col-sm-12 col-md-12">
+                                        <div class="form-group">
+                                            <strong>License No:</strong>
+                                            <input type="text" name="license_no" class="form-control" placeholder="{{Auth::guard('doctor')->user()->license_no}}">
+                                        </div>
+                                    </div>
+
                                     <div class="col-xs-12 col-sm-12 col-md-12 text-center">
                                         <button type="submit" class="btn btn-primary">Submit</button>
                                     </div>
@@ -352,6 +359,15 @@
                         </div>
                         <div class="col-md-6">
                             <p>{{ Auth::guard('doctor')->user()->fee }}</p>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label>License No.</label>
+                        </div>
+                        <div class="col-md-6">
+                            <p>{{ Auth::guard('doctor')->user()->license_no }}</p>
                         </div>
                     </div>
 
