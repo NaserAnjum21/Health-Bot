@@ -120,7 +120,7 @@
 
                 <td>
 
-                @if (strcmp($app->status, 'confirmed') == 0 or strcmp($app->status, 'pending') == 1)
+                @if (strcmp($app->status, 'confirmed') == 0 or strcmp($app->status, 'pending') == 0)
 
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelModal{{$app->id}}">Cancel</button>
 
